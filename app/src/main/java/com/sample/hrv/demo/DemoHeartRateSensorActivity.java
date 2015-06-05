@@ -68,11 +68,12 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 					overallHeartRateArray[index][1] = values[1];
 					index++;
 					everyOther = false;
-				} else {
+				}
+				else {
 					for(int i = 0; i< 50; i++){
 						Log.i("Heart Rate Array", "" + overallHeartRateArray[i][0] + " " + overallHeartRateArray[i][1]);
 					}
-					float avgHR = 0;
+					/*float avgHR = 0;
 					float avgRR = 0;
 					for(int i = 0; i< 50; i++){
 						avgHR += overallHeartRateArray[i][0];
@@ -81,20 +82,20 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 					avgHR /=50;
 					avgRR /=50;
 					Log.i("avgHR : ", ""+avgHR);
-					Log.i("avgRR : ", ""+avgRR);
+					Log.i("avgRR : ", ""+avgRR);*/
 
 					for(int i = 0; i < 50; i++) {
 						overallHeartRateArray[i][0] = 0;
 						overallHeartRateArray[i][1] = 0;
 						index = 0;
 					}
-					double sum = 0;
+					/*double sum = 0;
 					for(int i = 0; i < 50; i++) {
 						sum = Math.pow((double)(overallHeartRateArray[i+1][1]-overallHeartRateArray[i][1]),2);
 					}
 					double RMMSD = Math.sqrt((1/(50-1))*(sum));
 					Log.i("RMMSD", "" + RMMSD);
-
+					*/
 				}
 			}
 			else{
