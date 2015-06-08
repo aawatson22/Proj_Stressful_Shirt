@@ -73,9 +73,15 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 					for(int i = 0; i< 50; i++){
 						Log.i("Heart Rate Array", "" + overallHeartRateArray[i][0] + " " + overallHeartRateArray[i][1]);
 					}
-					HRVCalc HRVData = new HRVCalc();
+
+					//
+
 					//Do HRV Calculations
+					HRVCalc HRVData = new HRVCalc();
 					Log.i("AVNN",""+HRVCalc.AVNN(overallHeartRateArray));
+					Log.i("SDNN",""+HRVCalc.SDNN(overallHeartRateArray));
+					Log.i("rMSSD",""+HRVCalc.rMSSD(overallHeartRateArray));
+					Log.i("pNN50",""+HRVCalc.pNN50(overallHeartRateArray));
 
 					for(int i = 0; i < 50; i++) {
 						overallHeartRateArray[i][0] = 0;
@@ -112,7 +118,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 	 * 11)HF Norm - Normalized High Frequency
 	 */
 	public static class HRVCalc{
-		/** Time Domain Parameters**/
+		/** Time Domain Features**/
 
 		/**
 		 * AVNN - Mean of the beat to beat intervals
@@ -141,7 +147,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 		 * @param arr - array with the heart rate data
 		 * @return SDNN calculation
 		 */
-		public double SDNN(float[][] arr){
+		public static double SDNN(float[][] arr){
 			double sum = 0;
 			double SDNN = 0;
 
@@ -160,14 +166,14 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 		 * @param arr - array with the heart rate data
 		 * @return rMSSD calculations
 		 */
-		public double rMSSD(float[][] arr){
+		public static double rMSSD(float[][] arr){
 			double sum = 0;
 			double rMSSD = 0;
 
 			for(int i = 0; i < arr.length-1; i++){
 				sum += Math.pow((arr[i+1][1] - arr[i][1]),2);
 			}
-			rMSSD = Math.sqrt((1/(arr.length-1))* sum);
+			rMSSD = Math.sqrt((1.0f/(float)(arr.length-1))* sum);
 
 			return rMSSD;
 		}
@@ -177,7 +183,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 		 * @param arr - array with the heart rate data
 		 * @return pNN50 calculation
 		 */
-		public float pNN50(float[][] arr){
+		public static float pNN50(float[][] arr){
 			int n50Count = 0;
 			float pNN50 = 0f;
 
@@ -186,10 +192,14 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 					n50Count++;
 				}
 			}
-			pNN50 = (n50Count/arr.length) * 100;
+			pNN50 = (n50Count/(float)arr.length) * 100f;
 
 			return pNN50;
 		}
+
+		/**Frequency Domain Features**/
+
+
 
 
 	}
