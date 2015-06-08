@@ -73,29 +73,15 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 					for(int i = 0; i< 50; i++){
 						Log.i("Heart Rate Array", "" + overallHeartRateArray[i][0] + " " + overallHeartRateArray[i][1]);
 					}
-					/*float avgHR = 0;
-					float avgRR = 0;
-					for(int i = 0; i< 50; i++){
-						avgHR += overallHeartRateArray[i][0];
-						avgRR += overallHeartRateArray[i][1];
-					}
-					avgHR /=50;
-					avgRR /=50;
-					Log.i("avgHR : ", ""+avgHR);
-					Log.i("avgRR : ", ""+avgRR);*/
+					HRVCalc HRVData = new HRVCalc();
+					//Do HRV Calculations
+					Log.i("AVNN",""+HRVCalc.AVNN(overallHeartRateArray));
 
 					for(int i = 0; i < 50; i++) {
 						overallHeartRateArray[i][0] = 0;
 						overallHeartRateArray[i][1] = 0;
 						index = 0;
 					}
-					/*double sum = 0;
-					for(int i = 0; i < 50; i++) {
-						sum = Math.pow((double)(overallHeartRateArray[i+1][1]-overallHeartRateArray[i][1]),2);
-					}
-					double RMMSD = Math.sqrt((1/(50-1))*(sum));
-					Log.i("RMMSD", "" + RMMSD);
-					*/
 				}
 			}
 			else{
@@ -107,6 +93,104 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 
 			viewText.setText(text);
 		}
+
+	}
+
+	/**
+	 * This class provides the more in depth calculations for HRV. These Include
+	 * 1)AVNN - Mean of beat to beat intervals
+	 * 2)SDNN - Standard Deviations of the NN(normal-to-normal) intervals - 24 hours
+	 * 3)SDNN Index - SDNN for a 5 minute index troughout the day - 5 minutes
+	 * 4)RMS-SD - Square root of the mean squared differences of successive NN intervals
+	 * 5)TP - Total Power - Short term estimate of the total power of the power spectral
+	 * 		density in the range of frequencies between 1 and .4 HZ
+	 * 6)VLF - Very Low Frequency - 0.0033 nd 0.04 HZ
+	 * 7)LF - Low Frequency - 0.04 and 0.15 HZ
+	 * 8)HF - 0.15 ad 0.4 HZ
+	 * 9)LF/HF Ratio - overall balance in sympathetic and parasymphathetic nervous systems
+	 * 10)LF Norm - Normalized Low Frequency
+	 * 11)HF Norm - Normalized High Frequency
+	 */
+	public static class HRVCalc{
+		/** Time Domain Parameters**/
+
+		/**
+		 * AVNN - Mean of the beat to beat intervals
+		 * @param arr - array with heart rate data
+		 * @return AVNN calculation
+		 */
+		public static float AVNN(float[][] arr){
+			float sum = 0f;
+			float AVNN = 0f;
+
+			for(int i = 0; i < arr.length; i++){
+				sum += arr[i][1];
+			}
+
+			Log.i("arr.length : ", ""+(float)arr.length);
+			Log.i("(1 / arr.length) : ", ""+(1 / arr.length));
+			Log.i("Sum : ", ""+sum);
+
+			AVNN = (1.0f / (float)arr.length) * sum;
+
+			return AVNN;
+		}
+
+		/**
+		 * SDNN - Standard deviation of NN intervals
+		 * @param arr - array with the heart rate data
+		 * @return SDNN calculation
+		 */
+		public double SDNN(float[][] arr){
+			double sum = 0;
+			double SDNN = 0;
+
+			float AVNN = AVNN(arr);
+
+			for(int i = 0; i < arr.length; i++){
+				sum += Math.pow((double)(arr[i][1]-AVNN),2.0);
+			}
+			SDNN = Math.sqrt((1.0f/(float)arr.length)*sum);
+
+			return SDNN;
+		}
+
+		/**
+		 * rMSSD - Square root of the mean squared difference of successive NN intervals
+		 * @param arr - array with the heart rate data
+		 * @return rMSSD calculations
+		 */
+		public double rMSSD(float[][] arr){
+			double sum = 0;
+			double rMSSD = 0;
+
+			for(int i = 0; i < arr.length-1; i++){
+				sum += Math.pow((arr[i+1][1] - arr[i][1]),2);
+			}
+			rMSSD = Math.sqrt((1/(arr.length-1))* sum);
+
+			return rMSSD;
+		}
+
+		/**
+		 * pNN50 - number of pairs of successive RR's that differ by mre that 50 seconds
+		 * @param arr - array with the heart rate data
+		 * @return pNN50 calculation
+		 */
+		public float pNN50(float[][] arr){
+			int n50Count = 0;
+			float pNN50 = 0f;
+
+			for(int i = 0; i < arr.length - 1; i++){
+				if(arr[i+1][1] - arr[i][1] > 50){
+					n50Count++;
+				}
+			}
+			pNN50 = (n50Count/arr.length) * 100;
+
+			return pNN50;
+		}
+
 
 	}
 
