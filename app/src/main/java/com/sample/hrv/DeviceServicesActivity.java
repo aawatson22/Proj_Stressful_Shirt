@@ -64,6 +64,7 @@ public class DeviceServicesActivity extends Activity {
     private TextView dataField;
     private TextView heartRateField;
     private TextView intervalField;
+    private TextView AVNN;
     private Button demoButton;
     
     private ExpandableListView gattServicesList;
@@ -214,6 +215,7 @@ public class DeviceServicesActivity extends Activity {
         gattServicesList.setAdapter((SimpleExpandableListAdapter) null);
         dataField.setText(R.string.no_data);
 		heartRateField.setText(R.string.no_data);
+        AVNN.setText(R.string.no_data);
 		intervalField.setText(R.string.no_data);
     }
 

@@ -25,6 +25,9 @@ import com.sample.hrv.R;
 import com.sample.hrv.sensor.BleHeartRateSensor;
 import com.sample.hrv.sensor.BleSensor;
 
+import static com.sample.hrv.demo.DemoHeartRateSensorActivity.HRVCalc.pNN50;
+import static com.sample.hrv.demo.DemoHeartRateSensorActivity.HRVCalc.rMSSD;
+
 /**
  * Created by olli on 3/28/14.
  */
@@ -39,6 +42,12 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 	float[][] overallHeartRateArray = new float[50][2];
 	int index = 0;
 	boolean everyOther = false;
+
+	//Varibles to calculate HRV
+	private float AVNN;
+	private double SDNN;
+	private double rMSSD;
+	private float pNN50;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -49,7 +58,6 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 		getActionBar().setTitle(R.string.title_demo_heartrate);
 
 		viewText = (TextView) findViewById(R.id.text);
-
 		renderer = new PolygonRenderer(this);
 		view.setRenderer(renderer);
 		//view.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
@@ -72,16 +80,18 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 				else {
 					for(int i = 0; i< 50; i++){
 						Log.i("Heart Rate Array", "" + overallHeartRateArray[i][0] + " " + overallHeartRateArray[i][1]);
+
+						//Do HRV Calculations
+						HRVCalc HRVData = new HRVCalc();
+						AVNN = HRVCalc.AVNN(overallHeartRateArray);
+						//Log.i("AVNN","" + AVNN);
+						SDNN = HRVCalc.SDNN(overallHeartRateArray);
+						//Log.i("SDNN","" + SDNN);
+						rMSSD = HRVCalc.rMSSD(overallHeartRateArray);
+						//Log.i("rMSSD","" + rMSSD);
+						pNN50 = pNN50(overallHeartRateArray);
+						//Log.i("pNN50","" + pNN50);
 					}
-
-					//
-
-					//Do HRV Calculations
-					HRVCalc HRVData = new HRVCalc();
-					Log.i("AVNN",""+HRVCalc.AVNN(overallHeartRateArray));
-					Log.i("SDNN",""+HRVCalc.SDNN(overallHeartRateArray));
-					Log.i("rMSSD",""+HRVCalc.rMSSD(overallHeartRateArray));
-					Log.i("pNN50",""+HRVCalc.pNN50(overallHeartRateArray));
 
 					for(int i = 0; i < 50; i++) {
 						overallHeartRateArray[i][0] = 0;
@@ -97,6 +107,11 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 			renderer.setInterval(values);
 			view.requestRender();
 
+			text = text + "\nAVNN = " + Float.toString(AVNN);
+			text = text + "\nSDNN = " + Double.toString((Math.round(SDNN * 100)) / 100);
+			text = text + "\nrMSSD = " +Double.toString((Math.round(rMSSD * 100)) / 100);
+			text = text + "\npNN50 = " + Float.toString(pNN50);
+			//Log.i("text : ", "" + text);
 			viewText.setText(text);
 		}
 
