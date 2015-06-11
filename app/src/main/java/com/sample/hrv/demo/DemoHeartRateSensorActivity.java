@@ -29,7 +29,7 @@ import static com.sample.hrv.demo.DemoHeartRateSensorActivity.HRVCalc.pNN50;
 import static com.sample.hrv.demo.DemoHeartRateSensorActivity.HRVCalc.rMSSD;
 
 /**
- * Created by olli on 3/28/14.
+ * Created by Amanda Watson on 6/9/2015.
  */
 public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 	private final static String TAG = DemoHeartRateSensorActivity.class
@@ -39,15 +39,24 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 	private PolygonRenderer renderer;
 
 	private GLSurfaceView view;
-	float[][] overallHeartRateArray = new float[50][2];
+
+	//Data fo the array
+	float[][] overallHeartRateArray = new float[65][2];
 	int index = 0;
 	boolean everyOther = false;
+	float prevValue = 0f;
+	int timeSum = 0;
 
 	//Varibles to calculate HRV
 	private float AVNN;
 	private double SDNN;
 	private double rMSSD;
+	private float NN50;
 	private float pNN50;
+
+	//Stress level
+	private int stressLevel;
+
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -71,16 +80,27 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 			final BleHeartRateSensor heartSensor = (BleHeartRateSensor) sensor;
 			float[] values = heartSensor.getData();
 			if(everyOther) {
-				if (index < 50) {
-					overallHeartRateArray[index][0] = values[0];
-					overallHeartRateArray[index][1] = values[1];
-					index++;
-					everyOther = false;
+				if (index < overallHeartRateArray.length) {
+					//Do not add when heart rate 0
+					if(values[1] != -1) {
+						//Do not add when >20% off from previous value
+						Log.i("Difference : ", "" + (values[1] - prevValue)/((values[1] + prevValue)/2));
+						if((values[1] - prevValue)/((values[1] + prevValue)/2) <= 0.2 && (values[1] - prevValue)/((values[1] + prevValue)/2) >= -0.8) {
+							overallHeartRateArray[index][0] = values[0];
+							overallHeartRateArray[index][1] = values[1];
+							index++;
+							everyOther = false;
+							timeSum +=values[1];
+
+							Log.i("Heart Rate Array", "" + values[0] + " " + values[1]);
+						}
+						prevValue = values[1];
+					}
 				}
 				else {
-					for(int i = 0; i< 50; i++){
+					for(int i = 0; i< overallHeartRateArray.length; i++){
 						Log.i("Heart Rate Array", "" + overallHeartRateArray[i][0] + " " + overallHeartRateArray[i][1]);
-
+						timeSum = 0;
 						//Do HRV Calculations
 						HRVCalc HRVData = new HRVCalc();
 						AVNN = HRVCalc.AVNN(overallHeartRateArray);
@@ -89,11 +109,13 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 						//Log.i("SDNN","" + SDNN);
 						rMSSD = HRVCalc.rMSSD(overallHeartRateArray);
 						//Log.i("rMSSD","" + rMSSD);
-						pNN50 = pNN50(overallHeartRateArray);
+						pNN50 = HRVCalc.NN50(overallHeartRateArray);
+						//Log.i("NN50","" + pNN50);
+						pNN50 = HRVCalc.pNN50(overallHeartRateArray);
 						//Log.i("pNN50","" + pNN50);
 					}
 
-					for(int i = 0; i < 50; i++) {
+					for(int i = 0; i < overallHeartRateArray.length; i++) {
 						overallHeartRateArray[i][0] = 0;
 						overallHeartRateArray[i][1] = 0;
 						index = 0;
@@ -104,13 +126,42 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 				everyOther = true;
 			}
 
+			//If statements to determine real time stress level
+			if(pNN50 > 0) {
+				if (pNN50 < 1.9) {
+					stressLevel = 10;
+				} else if (pNN50 < 3.9) {
+					stressLevel = 9;
+				} else if (pNN50 < 5.9) {
+					stressLevel = 8;
+				} else if (pNN50 < 8.9) {
+					stressLevel = 7;
+				} else if (pNN50 < 10.9) {
+					stressLevel = 6;
+				} else if (pNN50 < 12.9) {
+					stressLevel = 5;
+				} else if (pNN50 < 14.9) {
+					stressLevel = 4;
+				} else if (pNN50 < 20.9) {
+					stressLevel = 3;
+				} else if (pNN50 < 26.9) {
+					stressLevel = 2;
+				} else if (pNN50 < 32.9) {
+					stressLevel = 1;
+				}
+			}
+
+
 			renderer.setInterval(values);
 			view.requestRender();
 
 			text = text + "\nAVNN = " + Float.toString(AVNN);
 			text = text + "\nSDNN = " + Double.toString((Math.round(SDNN * 100)) / 100);
 			text = text + "\nrMSSD = " +Double.toString((Math.round(rMSSD * 100)) / 100);
+			text = text + "\nNN50 = " + Float.toString(NN50);
 			text = text + "\npNN50 = " + Float.toString(pNN50);
+			text = text + "\nTime = " + timeSum;
+			text = text + "\nStress Level = " + stressLevel;
 			//Log.i("text : ", "" + text);
 			viewText.setText(text);
 		}
@@ -122,7 +173,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 	 * 1)AVNN - Mean of beat to beat intervals
 	 * 2)SDNN - Standard Deviations of the NN(normal-to-normal) intervals - 24 hours
 	 * 3)SDNN Index - SDNN for a 5 minute index troughout the day - 5 minutes
-	 * 4)RMS-SD - Square root of the mean squared differences of successive NN intervals
+	 * 4)RMSSD - Square root of the mean squared differences of successive NN intervals
 	 * 5)TP - Total Power - Short term estimate of the total power of the power spectral
 	 * 		density in the range of frequencies between 1 and .4 HZ
 	 * 6)VLF - Very Low Frequency - 0.0033 nd 0.04 HZ
@@ -148,9 +199,9 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 				sum += arr[i][1];
 			}
 
-			Log.i("arr.length : ", ""+(float)arr.length);
-			Log.i("(1 / arr.length) : ", ""+(1 / arr.length));
-			Log.i("Sum : ", ""+sum);
+			//Log.i("arr.length : ", ""+(float)arr.length);
+			//Log.i("(1 / arr.length) : ", ""+(1 / arr.length));
+			//Log.i("Sum : ", ""+sum);
 
 			AVNN = (1.0f / (float)arr.length) * sum;
 
@@ -210,6 +261,24 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 			pNN50 = (n50Count/(float)arr.length) * 100f;
 
 			return pNN50;
+		}
+
+		/**
+		 * NN50 - number of pairs of successive RR's that differ by mre that 50 seconds
+		 * @param arr - array with the heart rate data
+		 * @return pNN50 calculation
+		 */
+		public static float NN50(float[][] arr){
+			int n50Count = 0;
+			float pNN50 = 0f;
+
+			for(int i = 0; i < arr.length - 1; i++){
+				if(arr[i+1][1] - arr[i][1] > 50){
+					n50Count++;
+				}
+			}
+
+			return n50Count;
 		}
 
 		/**Frequency Domain Features**/
