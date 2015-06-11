@@ -3,7 +3,7 @@
     <!-- From: file:/C:/Users/amanda.watson/StudioProjects/BLE-Heart-rate-variability-demo-master/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="action_demo">Demo</string>
-    <string name="app_name">BLE HRV demo</string>
+    <string name="app_name">HRV Monitor</string>
     <string name="ble_not_supported">Bluetooth LE is not supported</string>
     <string name="connected">Connected</string>
     <string name="disconnected">Disconnected</string>
@@ -20,7 +20,7 @@
     <string name="no_data">No data</string>
     <string name="title_demo_accelerometer">Accelerometer Demo</string>
     <string name="title_demo_gyroscope">Gyroscope Demo</string>
-    <string name="title_demo_heartrate">Heart rate variability Demo</string>
+    <string name="title_demo_heartrate">Project Stressful Shirt</string>
     <string name="title_devices">Bluetooth LE Device Scan</string>
     <string name="unknown_characteristic">Unknown characteristic</string>
     <string name="unknown_device">Unknown device</string>

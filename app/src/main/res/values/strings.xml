@@ -14,7 +14,7 @@
      limitations under the License.
 -->
 <resources>
-    <string name="app_name">BLE HRV demo</string>
+    <string name="app_name">HRV Monitor</string>
     <string name="ble_not_supported">Bluetooth LE is not supported</string>
     <string name="label_data">Data:</string>
     <string name="label_heartrate">Heart rate:</string>
@@ -31,7 +31,7 @@
 
     <string name="title_demo_accelerometer">Accelerometer Demo</string>
     <string name="title_demo_gyroscope">Gyroscope Demo</string>
-    <string name="title_demo_heartrate">Heart rate variability Demo</string>
+    <string name="title_demo_heartrate">Project Stressful Shirt</string>
 
     <string name="unknown_device">Unknown device</string>
     <string name="unknown_characteristic">Unknown characteristic</string>

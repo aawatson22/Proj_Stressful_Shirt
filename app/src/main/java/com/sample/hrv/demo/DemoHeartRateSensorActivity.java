@@ -4,6 +4,7 @@ import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import java.nio.ByteBuffer;
@@ -39,6 +40,9 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 	private PolygonRenderer renderer;
 
 	private GLSurfaceView view;
+
+	//Stress Scale Visualization
+	private SeekBar seekBar;
 
 	//Data fo the array
 	float[][] overallHeartRateArray = new float[65][2];
