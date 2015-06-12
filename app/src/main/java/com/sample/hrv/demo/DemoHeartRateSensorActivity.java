@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.io.FileOutputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -31,6 +32,8 @@ import com.sample.hrv.sensor.BleSensor;
 import static com.sample.hrv.demo.DemoHeartRateSensorActivity.HRVCalc.pNN50;
 import static com.sample.hrv.demo.DemoHeartRateSensorActivity.HRVCalc.rMSSD;
 
+import java.io.File;
+
 /**
  * Created by Amanda Watson on 6/9/2015.
  */
@@ -43,11 +46,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 
 	private GLSurfaceView view;
 
-	//Stress Scale Visualization
-	private SeekBar seekBar;
-
 	//Data fo the array
-	//float[][] overallHeartRateArray = new float[65][2];
 	LinkedList<float[]> hrvData = new LinkedList<float[]>();
 	int index = 0;
 	boolean everyOther = false;
@@ -83,6 +82,19 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 
 	@Override
 	public void onDataRecieved(BleSensor<?> sensor, String text) {
+		//String path = context.getFilesDir().getAbsolutePath();
+		//File file = new File(path + "/my-file-name.txt");
+		//String filename = "myfile";
+		//String string = "Hello world!";
+		//FileOutputStream outputStream;
+
+		/*try {
+			outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+			outputStream.write(string.getBytes());
+			outputStream.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}*/
 		if (sensor instanceof BleHeartRateSensor) {
 			final BleHeartRateSensor heartSensor = (BleHeartRateSensor) sensor;
 			float[] values = heartSensor.getData();
@@ -94,13 +106,9 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 						Log.i("Difference : ", "" + (values[1] - prevValue) / ((values[1] + prevValue) / 2));
 						if ((values[1] - prevValue) / ((values[1] + prevValue) / 2) <= 0.2 && (values[1] - prevValue) / ((values[1] + prevValue) / 2) >= -0.8) {
 							hrvData.add(values);
-							//Log.i("hrvDATA", hrvData.toString());
-							//overallHeartRateArray[index][0] = values[0];
-							//overallHeartRateArray[index][1] = values[1];
 							index++;
 							everyOther = false;
 							timeSum += values[1];
-
 							Log.i("Heart Rate Array", "" + values[0] + " " + values[1]);
 						}
 					}
@@ -111,32 +119,12 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 					timeSum -= arr[1];
 					hrvData.removeFirst();
 
-					//for(int i = 0; i< overallHeartRateArray.length; i++){
-						//Log.i("Heart Rate Array", "" + overallHeartRateArray[i][0] + " " + overallHeartRateArray[i][1]);
-						//timeSum = 0;
-						//Do HRV Calculations
-						//sHRVCalc HRVData = new HRVCalc();
-						//AVNN = HRVCalc.AVNN(overallHeartRateArray);
-						//Log.i("AVNN","" + AVNN);
-						//SDNN = HRVCalc.SDNN(overallHeartRateArray);
-						//Log.i("SDNN","" + SDNN);
-						//rMSSD = HRVCalc.rMSSD(overallHeartRateArray);
-						//Log.i("rMSSD","" + rMSSD);
-						//NN50 = HRVCalc.NN50(overallHeartRateArray);
-						//Log.i("NN50","" + pNN50);
-						pNN50 = HRVCalc.pNN50(hrvData);
-						//Log.i("pNN50","" + pNN50);
-					//}
-
-					//for(int i = 0; i < overallHeartRateArray.length; i++) {
-					//	overallHeartRateArray[i][0] = 0;
-					//	overallHeartRateArray[i][1] = 0;
-						//index = 0;
-					//}
-
-					//if(index >= hr.length-1){
-						//index = 0;
-					//}
+					//Do HRV Calculations
+					AVNN = HRVCalc.AVNN(hrvData);
+					SDNN = HRVCalc.SDNN(hrvData);
+					rMSSD = HRVCalc.rMSSD(hrvData);
+					NN50 = HRVCalc.NN50(hrvData);
+					pNN50 = HRVCalc.pNN50(hrvData);
 				}
 			}
 			else{
@@ -205,99 +193,93 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 
 		/**
 		 * AVNN - Mean of the beat to beat intervals
-		 * @param arr - array with heart rate data
+		 * @param ll - linked list with heart rate data
 		 * @return AVNN calculation
 		 */
-		public static float AVNN(float[][] arr){
+		public static float AVNN(LinkedList<float[]> ll){
 			float sum = 0f;
 			float AVNN = 0f;
 
-			for(int i = 0; i < arr.length; i++){
-				sum += arr[i][1];
+			for(int i = 0; i < ll.size(); i++){
+				float arr[] = ll.get(i);
+				sum += arr[1];
 			}
 
-			//Log.i("arr.length : ", ""+(float)arr.length);
-			//Log.i("(1 / arr.length) : ", ""+(1 / arr.length));
-			//Log.i("Sum : ", ""+sum);
-
-			AVNN = (1.0f / (float)arr.length) * sum;
+			AVNN = (1.0f / (float)ll.size()) * sum;
 
 			return AVNN;
 		}
 
 		/**
 		 * SDNN - Standard deviation of NN intervals
-		 * @param arr - array with the heart rate data
+		 * @param ll - linked list with the heart rate data
 		 * @return SDNN calculation
 		 */
-		public static double SDNN(float[][] arr){
+		public static double SDNN(LinkedList<float[]> ll){
 			double sum = 0;
 			double SDNN = 0;
 
-			float AVNN = AVNN(arr);
+			float AVNN = AVNN(ll);
 
-			for(int i = 0; i < arr.length; i++){
-				sum += Math.pow((double)(arr[i][1]-AVNN),2.0);
+			for(int i = 0; i < ll.size(); i++){
+				float arr[] = ll.get(i);
+				sum += Math.pow((double)(arr[1]-AVNN),2.0);
 			}
-			SDNN = Math.sqrt((1.0f/(float)arr.length)*sum);
+			SDNN = Math.sqrt((1.0f/(float)ll.size())*sum);
 
 			return SDNN;
 		}
 
 		/**
 		 * rMSSD - Square root of the mean squared difference of successive NN intervals
-		 * @param arr - array with the heart rate data
+		 * @param ll - linked list the heart rate data
 		 * @return rMSSD calculations
 		 */
-		public static double rMSSD(float[][] arr){
+		public static double rMSSD(LinkedList<float[]> ll){
 			double sum = 0;
 			double rMSSD = 0;
 
-			for(int i = 0; i < arr.length-1; i++){
-				sum += Math.pow((arr[i+1][1] - arr[i][1]),2);
+			for(int i = 0; i < ll.size() - 1; i++){
+				float arr[] = ll.get(i);
+				float nextArr[] = ll.get(i+1);
+				sum += Math.pow((nextArr[1] - arr[1]),2);
 			}
-			rMSSD = Math.sqrt((1.0f/(float)(arr.length-1))* sum);
+			rMSSD = Math.sqrt((1.0f/(float)(ll.size() - 1))* sum);
 
 			return rMSSD;
 		}
 
 		/**
-		 * pNN50 - number of pairs of successive RR's that differ by mre that 50 seconds
-		 * @param arr - array with the heart rate data
+		 * NN50 - number of pairs of successive RR's that differ by mre that 50 seconds
+		 * @param ll - linked list with the heart rate data
 		 * @return pNN50 calculation
 		 */
-		public static float pNN50(LinkedList<float[]> ll){
+		public static int NN50(LinkedList<float[]> ll){
 			int n50Count = 0;
-			float pNN50 = 0f;
 
-			for(int i = 0; i <ll.size() - 1; i++){
+			for(int i = 0; i < ll.size() - 1; i++){
 				float arr[] = ll.get(i);
 				float nextArr[] = ll.get(i+1);
 				if(nextArr[1] - arr[1] > 50){
 					n50Count++;
 				}
 			}
-			pNN50 = (n50Count/(float)ll.size()) * 100f;
 
-			return pNN50;
+			return n50Count;
 		}
 
 		/**
-		 * NN50 - number of pairs of successive RR's that differ by mre that 50 seconds
-		 * @param arr - array with the heart rate data
+		 * pNN50 - number of pairs of successive RR's that differ by mre that 50 seconds
+		 * @param ll - linked list with the heart rate data
 		 * @return pNN50 calculation
 		 */
-		public static float NN50(float[][] arr){
-			int n50Count = 0;
+		public static float pNN50(LinkedList<float[]> ll){
+			int n50Count = NN50(ll);
 			float pNN50 = 0f;
 
-			for(int i = 0; i < arr.length - 1; i++){
-				if(arr[i+1][1] - arr[i][1] > 50){
-					n50Count++;
-				}
-			}
+			pNN50 = (n50Count/(float)ll.size()) * 100f;
 
-			return n50Count;
+			return pNN50;
 		}
 
 		/**Frequency Domain Features**/

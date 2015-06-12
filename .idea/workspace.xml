@@ -29,19 +29,43 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d0aacd2c-7c3f-47f9-b878-9fa3a7f7cfb3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/sample/hrv/demo/DemoHeartRateSensorActivity$AbstractRenderer.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/sample/hrv/demo/DemoHeartRateSensorActivity$AbstractRenderer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/sample/hrv/demo/DemoHeartRateSensorActivity$HRVCalc.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/sample/hrv/demo/DemoHeartRateSensorActivity$HRVCalc.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/sample/hrv/demo/DemoHeartRateSensorActivity$PolygonRenderer.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/sample/hrv/demo/DemoHeartRateSensorActivity$PolygonRenderer.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/sample/hrv/demo/DemoHeartRateSensorActivity$RegularPolygon.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/sample/hrv/demo/DemoHeartRateSensorActivity$RegularPolygon.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/sample/hrv/demo/DemoHeartRateSensorActivity.class" afterPath="$PROJECT_DIR$/app/build/intermediates/classes/debug/com/sample/hrv/demo/DemoHeartRateSensorActivity.class" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\BuildConfig.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\R$attr.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\R$drawable.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\R$id.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\R$layout.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\R$menu.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\R$string.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\R.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\demo\DemoHeartRateSensorActivity$AbstractRenderer.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\demo\DemoHeartRateSensorActivity$HRVCalc.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\demo\DemoHeartRateSensorActivity$PolygonRenderer.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\demo\DemoHeartRateSensorActivity$RegularPolygon.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\demo\DemoHeartRateSensorActivity.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\demo\DemoSensorActivity$1.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\demo\DemoSensorActivity$2.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\demo\DemoSensorActivity.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\info\BleDeviceInfoService.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\info\BleGapService.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\info\BleGattService.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\info\BleInfoService.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\info\BleInfoServices.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\sensor\BleHeartRateSensor.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\sensor\BleSensorUtils.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\sensor\BleSensors.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\amanda.watson\StudioProjects\BLE-Heart-rate-variability-demo-master\app\build\intermediates\classes\debug\com\sample\hrv\sensor\BleTestSensor.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/outputs/apk/app-debug-unaligned.apk" afterPath="$PROJECT_DIR$/app/build/outputs/apk/app-debug-unaligned.apk" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/outputs/apk/app-debug.apk" afterPath="$PROJECT_DIR$/app/build/outputs/apk/app-debug.apk" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/cache.properties.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/dex/debug/classes.dex" afterPath="$PROJECT_DIR$/app/build/intermediates/dex/debug/classes.dex" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/fileSnapshots.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/resources/resources-debug.ap_" afterPath="$PROJECT_DIR$/app/build/intermediates/resources/resources-debug.ap_" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.2.1/taskArtifacts/taskArtifacts.bin" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/manifests/full/debug/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/build/intermediates/manifests/full/debug/AndroidManifest.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sample/hrv/demo/DemoHeartRateSensorActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sample/hrv/demo/DemoHeartRateSensorActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/outputs/logs/manifest-merger-debug-report.txt" afterPath="$PROJECT_DIR$/app/build/outputs/logs/manifest-merger-debug-report.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="BLE-Heart-rate-variability-demo-master.iws" />
@@ -87,9 +111,12 @@
       <file leaf-file-name="DemoHeartRateSensorActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sample/hrv/demo/DemoHeartRateSensorActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.41326532">
-              <caret line="279" column="46" selection-start-line="279" selection-start-column="46" selection-end-line="279" selection-end-column="46" />
-              <folding />
+            <state vertical-scroll-proportion="0.88167053">
+              <caret line="96" column="11" selection-start-line="96" selection-start-column="11" selection-end-line="96" selection-end-column="11" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#1834#1863#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -99,7 +126,9 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -108,8 +137,10 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="31" column="34" selection-start-line="31" selection-start-column="34" selection-end-line="31" selection-end-column="34" />
-              <folding />
+              <caret line="31" column="79" selection-start-line="31" selection-start-column="79" selection-end-line="31" selection-end-column="79" />
+              <folding>
+                <element signature="e#1558#1576#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -1444,8 +1475,8 @@
       <list>
         <option value="$PROJECT_DIR$/app/src/main/java/com/sample/hrv/DeviceServicesActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/demo_opengl.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/sample/hrv/demo/DemoHeartRateSensorActivity.java" />
       </list>
     </option>
@@ -1461,10 +1492,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1928" />
-    <option name="y" value="-308" />
-    <option name="width" value="1936" />
-    <option name="height" value="1176" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1616" />
+    <option name="height" value="876" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -1489,7 +1520,10 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="ProjectPane" />
+      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -1634,14 +1668,11 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
-      <pane id="ProjectPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="recentsLimit" value="5" />
-    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.import" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="android.project.structure.last.selected" value="app" />
     <property name="android.project.structure.proportion" value="0.15" />
@@ -1856,24 +1887,24 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1928" y="-308" width="1936" height="1176" extended-state="6" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.23061825" sideWeight="0.45095947" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32684284" sideWeight="0.44408742" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37095192" sideWeight="0.5575693" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32684284" sideWeight="0.5559126" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32973504" sideWeight="0.4978678" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32973504" sideWeight="0.4552239" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32973504" sideWeight="0.4466951" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32973504" sideWeight="0.4978678" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32995737" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37095192" sideWeight="0.4424307" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38370952" sideWeight="0.4360341" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17590618" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21208227" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14498934" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
@@ -1997,7 +2028,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1834#1863#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2022,7 +2056,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1834#1863#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2047,7 +2084,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1834#1863#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2072,7 +2112,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1834#1863#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2097,7 +2140,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1834#1863#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2112,7 +2158,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1834#1863#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2276,14 +2325,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="34" selection-start-line="31" selection-start-column="34" selection-end-line="31" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sample/hrv/DeviceScanActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="1.9476268">
@@ -2341,15 +2382,30 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="79" selection-start-line="31" selection-start-column="79" selection-end-line="31" selection-end-column="79" />
+          <folding>
+            <element signature="e#1558#1576#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sample/hrv/demo/DemoHeartRateSensorActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.41326532">
-          <caret line="279" column="46" selection-start-line="279" selection-start-column="46" selection-end-line="279" selection-end-column="46" />
-          <folding />
+        <state vertical-scroll-proportion="0.88167053">
+          <caret line="96" column="11" selection-start-line="96" selection-start-column="11" selection-end-line="96" selection-end-column="11" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1834#1863#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
