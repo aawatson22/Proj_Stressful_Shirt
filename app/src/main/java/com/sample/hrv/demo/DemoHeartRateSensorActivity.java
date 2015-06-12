@@ -11,6 +11,8 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 
 import javax.microedition.khronos.egl.EGL10;
 import javax.microedition.khronos.egl.EGLConfig;
@@ -45,7 +47,8 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 	private SeekBar seekBar;
 
 	//Data fo the array
-	float[][] overallHeartRateArray = new float[65][2];
+	//float[][] overallHeartRateArray = new float[65][2];
+	LinkedList<float[]> hrvData = new LinkedList<float[]>();
 	int index = 0;
 	boolean everyOther = false;
 	float prevValue = 0f;
@@ -84,46 +87,56 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 			final BleHeartRateSensor heartSensor = (BleHeartRateSensor) sensor;
 			float[] values = heartSensor.getData();
 			if(everyOther) {
-				if (index < overallHeartRateArray.length) {
-					//Do not add when heart rate 0
-					if(values[1] != -1) {
+				//Do not add when heart rate 0
+				if (timeSum < 50000){
+					if (values[1] != -1) {
 						//Do not add when >20% off from previous value
-						Log.i("Difference : ", "" + (values[1] - prevValue)/((values[1] + prevValue)/2));
-						if((values[1] - prevValue)/((values[1] + prevValue)/2) <= 0.2 && (values[1] - prevValue)/((values[1] + prevValue)/2) >= -0.8) {
-							overallHeartRateArray[index][0] = values[0];
-							overallHeartRateArray[index][1] = values[1];
+						Log.i("Difference : ", "" + (values[1] - prevValue) / ((values[1] + prevValue) / 2));
+						if ((values[1] - prevValue) / ((values[1] + prevValue) / 2) <= 0.2 && (values[1] - prevValue) / ((values[1] + prevValue) / 2) >= -0.8) {
+							hrvData.add(values);
+							//Log.i("hrvDATA", hrvData.toString());
+							//overallHeartRateArray[index][0] = values[0];
+							//overallHeartRateArray[index][1] = values[1];
 							index++;
 							everyOther = false;
-							timeSum +=values[1];
+							timeSum += values[1];
 
 							Log.i("Heart Rate Array", "" + values[0] + " " + values[1]);
 						}
-						prevValue = values[1];
 					}
+					prevValue = values[1];
 				}
 				else {
-					for(int i = 0; i< overallHeartRateArray.length; i++){
-						Log.i("Heart Rate Array", "" + overallHeartRateArray[i][0] + " " + overallHeartRateArray[i][1]);
-						timeSum = 0;
-						//Do HRV Calculations
-						HRVCalc HRVData = new HRVCalc();
-						AVNN = HRVCalc.AVNN(overallHeartRateArray);
-						//Log.i("AVNN","" + AVNN);
-						SDNN = HRVCalc.SDNN(overallHeartRateArray);
-						//Log.i("SDNN","" + SDNN);
-						rMSSD = HRVCalc.rMSSD(overallHeartRateArray);
-						//Log.i("rMSSD","" + rMSSD);
-						pNN50 = HRVCalc.NN50(overallHeartRateArray);
-						//Log.i("NN50","" + pNN50);
-						pNN50 = HRVCalc.pNN50(overallHeartRateArray);
-						//Log.i("pNN50","" + pNN50);
-					}
+					float[] arr = hrvData.getFirst();
+					timeSum -= arr[1];
+					hrvData.removeFirst();
 
-					for(int i = 0; i < overallHeartRateArray.length; i++) {
-						overallHeartRateArray[i][0] = 0;
-						overallHeartRateArray[i][1] = 0;
-						index = 0;
-					}
+					//for(int i = 0; i< overallHeartRateArray.length; i++){
+						//Log.i("Heart Rate Array", "" + overallHeartRateArray[i][0] + " " + overallHeartRateArray[i][1]);
+						//timeSum = 0;
+						//Do HRV Calculations
+						//sHRVCalc HRVData = new HRVCalc();
+						//AVNN = HRVCalc.AVNN(overallHeartRateArray);
+						//Log.i("AVNN","" + AVNN);
+						//SDNN = HRVCalc.SDNN(overallHeartRateArray);
+						//Log.i("SDNN","" + SDNN);
+						//rMSSD = HRVCalc.rMSSD(overallHeartRateArray);
+						//Log.i("rMSSD","" + rMSSD);
+						//NN50 = HRVCalc.NN50(overallHeartRateArray);
+						//Log.i("NN50","" + pNN50);
+						pNN50 = HRVCalc.pNN50(hrvData);
+						//Log.i("pNN50","" + pNN50);
+					//}
+
+					//for(int i = 0; i < overallHeartRateArray.length; i++) {
+					//	overallHeartRateArray[i][0] = 0;
+					//	overallHeartRateArray[i][1] = 0;
+						//index = 0;
+					//}
+
+					//if(index >= hr.length-1){
+						//index = 0;
+					//}
 				}
 			}
 			else{
@@ -253,16 +266,18 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 		 * @param arr - array with the heart rate data
 		 * @return pNN50 calculation
 		 */
-		public static float pNN50(float[][] arr){
+		public static float pNN50(LinkedList<float[]> ll){
 			int n50Count = 0;
 			float pNN50 = 0f;
 
-			for(int i = 0; i < arr.length - 1; i++){
-				if(arr[i+1][1] - arr[i][1] > 50){
+			for(int i = 0; i <ll.size() - 1; i++){
+				float arr[] = ll.get(i);
+				float nextArr[] = ll.get(i+1);
+				if(nextArr[1] - arr[1] > 50){
 					n50Count++;
 				}
 			}
-			pNN50 = (n50Count/(float)arr.length) * 100f;
+			pNN50 = (n50Count/(float)ll.size()) * 100f;
 
 			return pNN50;
 		}
@@ -392,7 +407,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 			long curtime = SystemClock.uptimeMillis();
 
 			this.prepareBuffers(sides, interval[1]);
-			gl.glColor4f(96/255.0f, 246/255.0f, 255/255.0f, 1.0f);
+			gl.glColor4f(50/255.0f, 205/255.0f, 50/255.0f, 1.0f);
 			gl.glVertexPointer(3, GL10.GL_FLOAT, 0, mFVertexBuffer);
 			gl.glDrawElements(GL10.GL_TRIANGLES, this.numOfIndecies,
 					GL10.GL_UNSIGNED_SHORT, mIndexBuffer);
