@@ -27,4 +27,4 @@
           android:orderInCategory="101"
           android:showAsAction="ifRoom|withText"/>
 </menu>
-<!-- From: file:/C:/Users/amanda.watson/StudioProjects/BLE-Heart-rate-variability-demo-master/app/src/main/res/menu/gatt_scan.xml -->
+<!-- From: file:/C:/Users/Amanda/AndroidStudioProjects/Proj_Stressful_Shirt/app/src/main/res/menu/gatt_scan.xml -->

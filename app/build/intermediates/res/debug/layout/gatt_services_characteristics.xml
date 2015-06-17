@@ -125,4 +125,4 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:groupIndicator="@null"/> 
-</LinearLayout><!-- From: file:/C:/Users/amanda.watson/StudioProjects/BLE-Heart-rate-variability-demo-master/app/src/main/res/layout/gatt_services_characteristics.xml -->
+</LinearLayout><!-- From: file:/C:/Users/Amanda/AndroidStudioProjects/Proj_Stressful_Shirt/app/src/main/res/layout/gatt_services_characteristics.xml -->

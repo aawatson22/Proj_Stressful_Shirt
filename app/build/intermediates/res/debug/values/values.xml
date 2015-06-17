@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/C:/Users/amanda.watson/StudioProjects/BLE-Heart-rate-variability-demo-master/app/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/Amanda/AndroidStudioProjects/Proj_Stressful_Shirt/app/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="action_demo">Demo</string>
     <string name="app_name">HRV Monitor</string>

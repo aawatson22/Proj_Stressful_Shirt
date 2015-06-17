@@ -3,15 +3,20 @@ package com.sample.hrv.demo;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
@@ -33,6 +38,7 @@ import static com.sample.hrv.demo.DemoHeartRateSensorActivity.HRVCalc.pNN50;
 import static com.sample.hrv.demo.DemoHeartRateSensorActivity.HRVCalc.rMSSD;
 
 import java.io.File;
+import java.io.FileOutputStream;
 
 /**
  * Created by Amanda Watson on 6/9/2015.
@@ -63,9 +69,40 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 	//Stress level
 	private int stressLevel;
 
-	
+	//Fiie
+	File file;
+	FileOutputStream fos;
+
+	//CSV File
+	String baseDir = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
+	String fileName = "AnalysisData.csv";
+	String filePath = baseDir + File.separator + fileName;
+	File f = new File(filePath );
+	CSVWriter writer;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		try {
+			File newFolder = new File(Environment.getExternalStorageDirectory(), "/Android/data/com.sample.hrv");
+			if (!newFolder.exists()) {
+				newFolder.mkdir();
+			}
+			try {
+				file = new File(newFolder, DateFormat.getDateTimeInstance().format(new Date()) + ".csv");
+				file.createNewFile();
+			} catch (Exception ex) {
+				System.out.println("ex: " + ex);
+			}
+		} catch (Exception e) {
+			System.out.println("e: " + e);
+		}
+		try {
+			fos = new FileOutputStream(file);
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.demo_opengl);
 		view = (GLSurfaceView) findViewById(R.id.gl);
@@ -82,19 +119,6 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 
 	@Override
 	public void onDataRecieved(BleSensor<?> sensor, String text) {
-		//String path = context.getFilesDir().getAbsolutePath();
-		//File file = new File(path + "/my-file-name.txt");
-		//String filename = "myfile";
-		//String string = "Hello world!";
-		//FileOutputStream outputStream;
-
-		/*try {
-			outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
-			outputStream.write(string.getBytes());
-			outputStream.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}*/
 		if (sensor instanceof BleHeartRateSensor) {
 			final BleHeartRateSensor heartSensor = (BleHeartRateSensor) sensor;
 			float[] values = heartSensor.getData();
@@ -110,6 +134,15 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 							everyOther = false;
 							timeSum += values[1];
 							Log.i("Heart Rate Array", "" + values[0] + " " + values[1]);
+							try {
+
+								fos.write(ByteBuffer.allocate(4).putFloat(values[0]).array());
+
+							} catch (FileNotFoundException e) {
+								e.printStackTrace();
+							} catch (IOException e) {
+								e.printStackTrace();
+							}
 						}
 					}
 					prevValue = values[1];
@@ -180,7 +213,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 	 * 3)SDNN Index - SDNN for a 5 minute index troughout the day - 5 minutes
 	 * 4)RMSSD - Square root of the mean squared differences of successive NN intervals
 	 * 5)TP - Total Power - Short term estimate of the total power of the power spectral
-	 * 		density in the range of frequencies between 1 and .4 HZ
+	 *        density in the range of frequencies between 1 and .4 HZ
 	 * 6)VLF - Very Low Frequency - 0.0033 nd 0.04 HZ
 	 * 7)LF - Low Frequency - 0.04 and 0.15 HZ
 	 * 8)HF - 0.15 ad 0.4 HZ
@@ -289,8 +322,9 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 
 	}
 
+
 	public abstract class AbstractRenderer implements GLSurfaceView.Renderer {
-		
+
 		public int[] getConfigSpec() {
 			int[] configSpec = { EGL10.EGL_DEPTH_SIZE, 0, EGL10.EGL_NONE };
 			return configSpec;
@@ -354,9 +388,9 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 			}
 			this.interval[0] = interval[0]; // heart rate
 			this.interval[1] = interval[1]; // beat to beat interval
-			this.interval[2] = 0;			// empty
+			this.interval[2] = 0;        // empty
 		}
-		
+
 		public PolygonRenderer(Context context) {
 			prepareBuffers(sides, interval[1]);
 		}
@@ -367,15 +401,15 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 			if (radius < 0) {
 				radius = previousInterval;
 			}
-			
+
 			// Double check if the previous value was valid
 			if (radius < 0) {
 				radius = 700;
 			}
 			Log.d(TAG,"final radius: "+radius);
-			
+
 			radius = ( ( radius / 1000 ) - 0.7f ) * 2;
-			
+
 			RegularPolygon t = new RegularPolygon(0, 0, 0, radius, sides);
 			this.mFVertexBuffer = t.getVertexBuffer();
 			this.mIndexBuffer = t.getIndexBuffer();
@@ -406,9 +440,9 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 		private float[] yarray = null;
 
 		public RegularPolygon(float incx, float incy, float incz, // (x,y,z)
-																	// center
-				float inr, // radius
-				int insides) // number of sides
+							  // center
+							  float inr, // radius
+							  int insides) // number of sides
 		{
 			cx = incx;
 			cy = incy;
@@ -598,3 +632,4 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 	}
 
 }
+
