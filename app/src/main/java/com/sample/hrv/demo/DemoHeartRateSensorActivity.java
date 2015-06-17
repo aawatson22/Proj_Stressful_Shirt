@@ -73,11 +73,16 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 
 	//File
 	File file;
-	FileOutputStream fos;
+	CSVWriter writer;
+	//FileOutputStream fos;
+
+
 
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+
+
 		try {
 			File newFolder = new File(Environment.getExternalStorageDirectory(), "/Android/data/com.sample.hrv");
 			if (!newFolder.exists()) {
@@ -92,13 +97,12 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 		} catch (Exception e) {
 			System.out.println("e: " + e);
 		}
-		try {
-			fos = new FileOutputStream(file);
 
-		} catch (FileNotFoundException e) {
+		try {
+			writer = new CSVWriter(new FileWriter("/Android/data/com.sample.hrv"));
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 
 
 		super.onCreate(savedInstanceState);
@@ -133,7 +137,10 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 							timeSum += values[1];
 							Log.i("Heart Rate Array", "" + values[0] + " " + values[1]);
 							try {
-								fos.write(ByteBuffer.allocate(4).putFloat(values[0]).array());
+								String[] data = {"Ship Name","Scientist Name", "..."};
+
+								writer.writeNext(data);
+								//fos.write(ByteBuffer.allocate(4).putFloat(values[0]).array());
 							} catch (FileNotFoundException e) {
 								e.printStackTrace();
 							}catch (IOException e) {

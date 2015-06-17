@@ -10,19 +10,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="224d90d4-b6f5-4437-9ed7-421c806d1b8c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/outputs/apk/app-debug-unaligned.apk" afterPath="$PROJECT_DIR$/app/build/outputs/apk/app-debug-unaligned.apk" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/outputs/apk/app-debug.apk" afterPath="$PROJECT_DIR$/app/build/outputs/apk/app-debug.apk" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\BuildConfig.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\R$attr.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\R$drawable.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\R$id.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\R$layout.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\R$menu.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\R$string.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\R.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\demo\DemoHeartRateSensorActivity$AbstractRenderer.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\demo\DemoHeartRateSensorActivity$HRVCalc.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\demo\DemoHeartRateSensorActivity$PolygonRenderer.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\demo\DemoHeartRateSensorActivity$RegularPolygon.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\demo\DemoHeartRateSensorActivity.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\demo\DemoSensorActivity$1.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\demo\DemoSensorActivity$2.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\demo\DemoSensorActivity.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\info\BleDeviceInfoService.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\info\BleGapService.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\info\BleGattService.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\info\BleInfoService.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\info\BleInfoServices.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\sensor\BleHeartRateSensor.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\sensor\BleSensorUtils.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\sensor\BleSensors.class" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\classes\debug\com\sample\hrv\sensor\BleTestSensor.class" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/cache.properties.lock" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/dex/debug/classes.dex" afterPath="$PROJECT_DIR$/app/build/intermediates/dex/debug/classes.dex" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileHashes.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/outputFileStates.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/outputFileStates.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/resources/resources-debug.ap_" afterPath="$PROJECT_DIR$/app/build/intermediates/resources/resources-debug.ap_" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/2.4/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/intermediates/manifests/full/debug/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/build/intermediates/manifests/full/debug/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/sample/hrv/demo/DemoHeartRateSensorActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/sample/hrv/demo/DemoHeartRateSensorActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/outputs/logs/manifest-merger-debug-report.txt" afterPath="$PROJECT_DIR$/app/build/outputs/logs/manifest-merger-debug-report.txt" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Proj_Stressful_Shirt.iws" />
@@ -54,15 +69,15 @@
       <file leaf-file-name="DemoHeartRateSensorActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sample/hrv/demo/DemoHeartRateSensorActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6044881">
-              <caret line="119" column="8" selection-start-line="119" selection-start-column="8" selection-end-line="119" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.65680474">
+              <caret line="142" column="49" selection-start-line="142" selection-start-column="49" selection-end-line="142" selection-end-column="49" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#2667#2696#0" expanded="true" />
-                <element signature="e#10695#10696#0" expanded="true" />
-                <element signature="e#10738#10739#0" expanded="true" />
-                <element signature="e#16550#16551#0" expanded="true" />
-                <element signature="e#16575#16576#0" expanded="true" />
+                <element signature="e#2719#2748#0" expanded="true" />
+                <element signature="e#10845#10846#0" expanded="true" />
+                <element signature="e#10888#10889#0" expanded="true" />
+                <element signature="e#16700#16701#0" expanded="true" />
+                <element signature="e#16725#16726#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1531,10 +1546,10 @@
     <order />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1928" />
+    <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1176" />
+    <option name="width" value="1382" />
+    <option name="height" value="744" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -1828,7 +1843,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1928" y="-8" width="1936" height="1176" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1841,14 +1856,14 @@
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.18842001" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24435721" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3270869" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24435721" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17110874" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24281392" sideWeight="0.5" order="3" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32777232" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1904,15 +1919,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/sample/hrv/demo/DemoHeartRateSensorActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6044881">
-          <caret line="119" column="8" selection-start-line="119" selection-start-column="8" selection-end-line="119" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.65680474">
+          <caret line="142" column="49" selection-start-line="142" selection-start-column="49" selection-end-line="142" selection-end-column="49" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2667#2696#0" expanded="true" />
-            <element signature="e#10695#10696#0" expanded="true" />
-            <element signature="e#10738#10739#0" expanded="true" />
-            <element signature="e#16550#16551#0" expanded="true" />
-            <element signature="e#16575#16576#0" expanded="true" />
+            <element signature="e#2719#2748#0" expanded="true" />
+            <element signature="e#10845#10846#0" expanded="true" />
+            <element signature="e#10888#10889#0" expanded="true" />
+            <element signature="e#16700#16701#0" expanded="true" />
+            <element signature="e#16725#16726#0" expanded="true" />
           </folding>
         </state>
       </provider>
