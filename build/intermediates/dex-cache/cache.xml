@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\libs\opencsv-3.4.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="55e38f6c6457ea7deb9174e70b540b4c6c217724">
+        <dex dex="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\pre-dexed\debug\opencsv-3.4-ac6b657a96051d38d9774d2b9f0351abfcb63436.jar" />
+    </item>
+
+</items>

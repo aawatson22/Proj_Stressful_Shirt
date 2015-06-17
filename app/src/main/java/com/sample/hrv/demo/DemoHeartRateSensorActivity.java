@@ -10,12 +10,14 @@ import android.widget.TextView;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -30,6 +32,7 @@ import android.content.Context;
 import android.os.SystemClock;
 
 
+import com.opencsv.CSVWriter;
 import com.sample.hrv.R;
 import com.sample.hrv.sensor.BleHeartRateSensor;
 import com.sample.hrv.sensor.BleSensor;
@@ -38,7 +41,6 @@ import static com.sample.hrv.demo.DemoHeartRateSensorActivity.HRVCalc.pNN50;
 import static com.sample.hrv.demo.DemoHeartRateSensorActivity.HRVCalc.rMSSD;
 
 import java.io.File;
-import java.io.FileOutputStream;
 
 /**
  * Created by Amanda Watson on 6/9/2015.
@@ -69,16 +71,10 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 	//Stress level
 	private int stressLevel;
 
-	//Fiie
+	//File
 	File file;
 	FileOutputStream fos;
 
-	//CSV File
-	String baseDir = android.os.Environment.getExternalStorageDirectory().getAbsolutePath();
-	String fileName = "AnalysisData.csv";
-	String filePath = baseDir + File.separator + fileName;
-	File f = new File(filePath );
-	CSVWriter writer;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -103,6 +99,8 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 			e.printStackTrace();
 		}
 
+
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.demo_opengl);
 		view = (GLSurfaceView) findViewById(R.id.gl);
@@ -119,7 +117,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 
 	@Override
 	public void onDataRecieved(BleSensor<?> sensor, String text) {
-		if (sensor instanceof BleHeartRateSensor) {
+			if (sensor instanceof BleHeartRateSensor) {
 			final BleHeartRateSensor heartSensor = (BleHeartRateSensor) sensor;
 			float[] values = heartSensor.getData();
 			if(everyOther) {
@@ -135,12 +133,10 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 							timeSum += values[1];
 							Log.i("Heart Rate Array", "" + values[0] + " " + values[1]);
 							try {
-
 								fos.write(ByteBuffer.allocate(4).putFloat(values[0]).array());
-
 							} catch (FileNotFoundException e) {
 								e.printStackTrace();
-							} catch (IOException e) {
+							}catch (IOException e) {
 								e.printStackTrace();
 							}
 						}
@@ -213,7 +209,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 	 * 3)SDNN Index - SDNN for a 5 minute index troughout the day - 5 minutes
 	 * 4)RMSSD - Square root of the mean squared differences of successive NN intervals
 	 * 5)TP - Total Power - Short term estimate of the total power of the power spectral
-	 *        density in the range of frequencies between 1 and .4 HZ
+	 * 		density in the range of frequencies between 1 and .4 HZ
 	 * 6)VLF - Very Low Frequency - 0.0033 nd 0.04 HZ
 	 * 7)LF - Low Frequency - 0.04 and 0.15 HZ
 	 * 8)HF - 0.15 ad 0.4 HZ
@@ -322,7 +318,6 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 
 	}
 
-
 	public abstract class AbstractRenderer implements GLSurfaceView.Renderer {
 
 		public int[] getConfigSpec() {
@@ -388,7 +383,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 			}
 			this.interval[0] = interval[0]; // heart rate
 			this.interval[1] = interval[1]; // beat to beat interval
-			this.interval[2] = 0;        // empty
+			this.interval[2] = 0;			// empty
 		}
 
 		public PolygonRenderer(Context context) {
@@ -440,9 +435,9 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 		private float[] yarray = null;
 
 		public RegularPolygon(float incx, float incy, float incz, // (x,y,z)
-							  // center
-							  float inr, // radius
-							  int insides) // number of sides
+																	// center
+				float inr, // radius
+				int insides) // number of sides
 		{
 			cx = incx;
 			cy = incy;
@@ -632,4 +627,3 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 	}
 
 }
-
