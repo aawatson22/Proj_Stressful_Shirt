@@ -76,7 +76,6 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 	File file;
 	CSVWriter writer;
 	StringWriter stringWriter = new StringWriter();
-	//FileOutputStream fos;
 
 
 
@@ -84,24 +83,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 
-
-		/*try {
-			File newFolder = new File(Environment.getExternalStorageDirectory(), "/Android/data/com.sample.hrv");
-			if (!newFolder.exists()) {
-				newFolder.mkdir();
-			}
-			try {
-				file = new File(newFolder, DateFormat.getDateTimeInstance().format(new Date()) + ".csv");
-				file.createNewFile();
-			} catch (Exception ex) {
-				System.out.println("ex: " + ex);
-			}
-		} catch (Exception e) {
-			System.out.println("e: " + e);
-		}*/
-
 		try {
-			//writer = new CSVWriter(new FileWriter("/Android/data/com.sample.hrv"));
 			writer = new CSVWriter(new FileWriter("/sdcard/Android/data/com.sample.hrv/" +
 					DateFormat.getDateTimeInstance().format(new Date()) + ".csv"), ',');
 		} catch (IOException e) {
@@ -122,9 +104,6 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 		// Render when hear rate data is updated
 		view.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
 
-		//String[] data = {"Ship Name", "Scientist Name", "..."};
-
-		//writer.write(data);
 	}
 
 	@Override
@@ -143,20 +122,17 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 							everyOther = false;
 							timeSum += values[1];
 							Log.i("Heart Rate Array", "" + values[0] + " " + values[1]);
-							//String[] data = {"Ship Name", "Scientist Name", "..."};
 
-							//writer.writeNext(data);
-							//fos.write(ByteBuffer.allocate(4).putFloat(values[0]).array());
-
+							//Write data to file
 							String[] temp = new String[values.length + 1];
 							temp[0] = DateFormat.getDateTimeInstance().format(new Date());
 							for (int i = 0; i < values.length; i++) {
                                 temp[i+1] = Float.toString(values[i]);
                             }
-							//temp = "first#second#third".split("#"); // array of your values
-							//String[] entries = values[0]"#second#third".split("#"); // array of your values
+
 							writer.writeNext(temp);
 
+							//Write to file at each data point
 							try {
 								writer.flush();
 							} catch (IOException e) {
