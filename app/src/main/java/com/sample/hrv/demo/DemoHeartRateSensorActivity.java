@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -74,6 +75,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 	//File
 	File file;
 	CSVWriter writer;
+	StringWriter stringWriter = new StringWriter();
 	//FileOutputStream fos;
 
 
@@ -83,7 +85,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 	public void onCreate(Bundle savedInstanceState) {
 
 
-		try {
+		/*try {
 			File newFolder = new File(Environment.getExternalStorageDirectory(), "/Android/data/com.sample.hrv");
 			if (!newFolder.exists()) {
 				newFolder.mkdir();
@@ -96,10 +98,12 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 			}
 		} catch (Exception e) {
 			System.out.println("e: " + e);
-		}
+		}*/
 
 		try {
-			writer = new CSVWriter(new FileWriter("/Android/data/com.sample.hrv"));
+			//writer = new CSVWriter(new FileWriter("/Android/data/com.sample.hrv"));
+			writer = new CSVWriter(new FileWriter("/sdcard/Android/data/com.sample.hrv/" +
+					DateFormat.getDateTimeInstance().format(new Date()) + ".csv"), ',');
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -117,6 +121,10 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 		//view.setRenderMode(GLSurfaceView.RENDERMODE_CONTINUOUSLY);
 		// Render when hear rate data is updated
 		view.setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+
+		//String[] data = {"Ship Name", "Scientist Name", "..."};
+
+		//writer.write(data);
 	}
 
 	@Override
@@ -124,9 +132,8 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 			if (sensor instanceof BleHeartRateSensor) {
 			final BleHeartRateSensor heartSensor = (BleHeartRateSensor) sensor;
 			float[] values = heartSensor.getData();
-			if(everyOther) {
 				//Do not add when heart rate 0
-				if (timeSum < 50000){
+				if(everyOther) if (timeSum < 50000) {
 					if (values[1] != -1) {
 						//Do not add when >20% off from previous value
 						Log.i("Difference : ", "" + (values[1] - prevValue) / ((values[1] + prevValue) / 2));
@@ -136,21 +143,29 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 							everyOther = false;
 							timeSum += values[1];
 							Log.i("Heart Rate Array", "" + values[0] + " " + values[1]);
-							try {
-								String[] data = {"Ship Name","Scientist Name", "..."};
+							//String[] data = {"Ship Name", "Scientist Name", "..."};
 
-								writer.writeNext(data);
-								//fos.write(ByteBuffer.allocate(4).putFloat(values[0]).array());
-							} catch (FileNotFoundException e) {
-								e.printStackTrace();
-							}catch (IOException e) {
+							//writer.writeNext(data);
+							//fos.write(ByteBuffer.allocate(4).putFloat(values[0]).array());
+
+							String[] temp = new String[values.length + 1];
+							temp[0] = DateFormat.getDateTimeInstance().format(new Date());
+							for (int i = 0; i < values.length; i++) {
+                                temp[i+1] = Float.toString(values[i]);
+                            }
+							//temp = "first#second#third".split("#"); // array of your values
+							//String[] entries = values[0]"#second#third".split("#"); // array of your values
+							writer.writeNext(temp);
+
+							try {
+								writer.flush();
+							} catch (IOException e) {
 								e.printStackTrace();
 							}
 						}
 					}
 					prevValue = values[1];
-				}
-				else {
+				} else {
 					float[] arr = hrvData.getFirst();
 					timeSum -= arr[1];
 					hrvData.removeFirst();
@@ -162,7 +177,6 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 					NN50 = HRVCalc.NN50(hrvData);
 					pNN50 = HRVCalc.pNN50(hrvData);
 				}
-			}
 			else{
 				everyOther = true;
 			}
@@ -208,6 +222,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 		}
 
 	}
+
 
 	/**
 	 * This class provides the more in depth calculations for HRV. These Include

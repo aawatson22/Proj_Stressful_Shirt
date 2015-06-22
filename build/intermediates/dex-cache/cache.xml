@@ -2,11 +2,25 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\libs\opencsv-3.4.jar"
+        jar="C:\Users\Amanda\.gradle\caches\modules-2\files-2.1\com.koushikdutta.async\androidasync\2.1.6\e3d5f6ab2003e31f2cf5ea61b4731a21e9517935\androidasync-2.1.6.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="55e38f6c6457ea7deb9174e70b540b4c6c217724">
-        <dex dex="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\pre-dexed\debug\opencsv-3.4-ac6b657a96051d38d9774d2b9f0351abfcb63436.jar" />
+        sha1="e3d5f6ab2003e31f2cf5ea61b4731a21e9517935">
+        <dex dex="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\pre-dexed\debug\androidasync-2.1.6-7fef60dbc08a69c661230bdc1d2dba92d3b2675b.jar" />
+    </item>
+    <item
+        jar="C:\Users\Amanda\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3\5fc52c41ef0239d1093a1eb7c3697036183677ce\gson-2.3.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="5fc52c41ef0239d1093a1eb7c3697036183677ce">
+        <dex dex="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\pre-dexed\debug\gson-2.3-36af70e90d458983cc9eb3ef7e10b2e699d2994a.jar" />
+    </item>
+    <item
+        jar="C:\Users\Amanda\.gradle\caches\modules-2\files-2.1\com.koushikdutta.ion\ion\2.1.6\cd55ef3ba6d8b62838b658ba2507b019dffb3a08\ion-2.1.6.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="cd55ef3ba6d8b62838b658ba2507b019dffb3a08">
+        <dex dex="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\pre-dexed\debug\ion-2.1.6-c861f61826036ffb0b10f8d25f940a13d3dd5500.jar" />
     </item>
 
 </items>

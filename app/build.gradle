@@ -19,4 +19,5 @@ android {
 
 dependencies {
     compile files('libs/opencsv-3.4.jar')
+    compile 'com.koushikdutta.ion:ion:2.+'
 }
