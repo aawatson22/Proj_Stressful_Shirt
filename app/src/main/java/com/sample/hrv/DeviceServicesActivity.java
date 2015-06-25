@@ -87,7 +87,7 @@ public class DeviceServicesActivity extends Activity {
         public void onServiceConnected(ComponentName componentName, IBinder service) {
             bleService = ((BleService.LocalBinder) service).getService();
             if (!bleService.initialize()) {
-                Log.e(TAG, "Unable to initialize Bluetooth");
+                //Log.e(TAG, "Unable to initialize Bluetooth");
                 finish();
             }
             // Automatically connects to the device upon successful start-up initialization.
@@ -165,7 +165,7 @@ public class DeviceServicesActivity extends Activity {
     private final BleServicesAdapter.OnServiceItemClickListener demoClickListener = new BleServicesAdapter.OnServiceItemClickListener() {
         @Override
         public void onDemoClick(BluetoothGattService service) {
-        	Log.d(TAG, "onDemoClick: service" +service.getUuid().toString());
+        	//Log.d(TAG, "onDemoClick: service" +service.getUuid().toString());
             final BleSensor<?> sensor = BleSensors.getSensor(service.getUuid().toString());
             if (sensor == null)
                 return;
@@ -215,7 +215,7 @@ public class DeviceServicesActivity extends Activity {
         gattServicesList.setAdapter((SimpleExpandableListAdapter) null);
         dataField.setText(R.string.no_data);
 		heartRateField.setText(R.string.no_data);
-        AVNN.setText(R.string.no_data);
+        //AVNN.setText(R.string.no_data);
 		intervalField.setText(R.string.no_data);
     }
 
@@ -244,12 +244,12 @@ public class DeviceServicesActivity extends Activity {
 		demoButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Log.d(TAG, "onClick serviceListener: "+serviceListener);
+				//.d(TAG, "onClick serviceListener: "+serviceListener);
 				if (serviceListener == null)
 					return;
 				final BluetoothGattService service = gattServiceAdapter.getHeartRateService();
 				serviceListener.onDemoClick(service);
-				Log.d(TAG, "set service listener");
+				//Log.d(TAG, "set service listener");
 			}
 		});
 
@@ -268,7 +268,7 @@ public class DeviceServicesActivity extends Activity {
         registerReceiver(gattUpdateReceiver, makeGattUpdateIntentFilter());
         if (bleService != null) {
             final boolean result = bleService.connect(deviceAddress);
-            Log.d(TAG, "Connect request result=" + result);
+            //Log.d(TAG, "Connect request result=" + result);
         }
     }
 
@@ -339,7 +339,7 @@ public class DeviceServicesActivity extends Activity {
 
 		final BluetoothGattCharacteristic characteristic = gattServiceAdapter
 				.getHeartRateCharacteristic();
-		Log.d(TAG,"characteristic: " + characteristic);
+		//Log.d(TAG,"characteristic: " + characteristic);
 		final BleSensor<?> sensor = BleSensors.getSensor(characteristic
 				.getService()
 				.getUuid()

@@ -2,17 +2,23 @@ package com.sample.hrv.demo;
 
 import android.opengl.GLSurfaceView;
 import android.opengl.GLU;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.StringWriter;
+import java.net.URI;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
@@ -37,6 +43,15 @@ import com.opencsv.CSVWriter;
 import com.sample.hrv.R;
 import com.sample.hrv.sensor.BleHeartRateSensor;
 import com.sample.hrv.sensor.BleSensor;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import static com.sample.hrv.demo.DemoHeartRateSensorActivity.HRVCalc.pNN50;
 import static com.sample.hrv.demo.DemoHeartRateSensorActivity.HRVCalc.rMSSD;
@@ -77,6 +92,15 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 	CSVWriter writer;
 	StringWriter stringWriter = new StringWriter();
 
+    //HTTP Get
+    HttpClient httpclient = new DefaultHttpClient();
+
+    // Prepare a request object
+    HttpGet httpget = new HttpGet("http://www.google.com");
+
+    // Execute the request
+    HttpResponse response;
+
 
 
 
@@ -113,7 +137,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 			float[] values = heartSensor.getData();
 				//Do not add when heart rate 0
 				if(everyOther) if (timeSum < 50000) {
-					if (values[1] != -1) {
+					if (values[1] != -1 && values[0] != 0) {
 						//Do not add when >20% off from previous value
 						Log.i("Difference : ", "" + (values[1] - prevValue) / ((values[1] + prevValue) / 2));
 						if ((values[1] - prevValue) / ((values[1] + prevValue) / 2) <= 0.2 && (values[1] - prevValue) / ((values[1] + prevValue) / 2) >= -0.8) {
@@ -122,13 +146,17 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 							everyOther = false;
 							timeSum += values[1];
 							Log.i("Heart Rate Array", "" + values[0] + " " + values[1]);
+							//BufferedReader in = null;
+
+							new RequestTask().execute("http://10.2.7.211:9081/?modelname=volleyballmathlete&sourcedata=" + values[1]);
 
 							//Write data to file
-							String[] temp = new String[values.length + 1];
-							temp[0] = DateFormat.getDateTimeInstance().format(new Date());
+							String[] temp = new String[values.length + 2];
+							temp[0] = DateFormat.getDateInstance().format(new Date());
+							temp[1] = DateFormat.getTimeInstance().format(new Date());
 							for (int i = 0; i < values.length; i++) {
-                                temp[i+1] = Float.toString(values[i]);
-                            }
+								temp[i + 2] = Float.toString(values[i]);
+							}
 
 							writer.writeNext(temp);
 
@@ -199,6 +227,40 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 
 	}
 
+	class RequestTask extends AsyncTask<String, String, String>{
+
+		@Override
+		protected String doInBackground(String... uri) {
+			HttpClient httpclient = new DefaultHttpClient();
+			HttpResponse response;
+			String responseString = null;
+			try {
+				response = httpclient.execute(new HttpGet(uri[0]));
+				StatusLine statusLine = response.getStatusLine();
+				if(statusLine.getStatusCode() == HttpStatus.SC_OK){
+					ByteArrayOutputStream out = new ByteArrayOutputStream();
+					response.getEntity().writeTo(out);
+					responseString = out.toString();
+					out.close();
+				} else{
+					//Closes the connection.
+					response.getEntity().getContent().close();
+					throw new IOException(statusLine.getReasonPhrase());
+				}
+			} catch (ClientProtocolException e) {
+				//TODO Handle problems..
+			} catch (IOException e) {
+				//TODO Handle problems..
+			}
+			return responseString;
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			super.onPostExecute(result);
+			//Do anything with response..
+		}
+	}
 
 	/**
 	 * This class provides the more in depth calculations for HRV. These Include
@@ -389,7 +451,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 		}
 
 		private void prepareBuffers(int sides, float radius) {
-			Log.d(TAG,"radius: "+radius +" previous: "+previousInterval);
+			//Log.d(TAG,"radius: "+radius +" previous: "+previousInterval);
 			// Is it a valid value?
 			if (radius < 0) {
 				radius = previousInterval;
@@ -399,7 +461,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 			if (radius < 0) {
 				radius = 700;
 			}
-			Log.d(TAG,"final radius: "+radius);
+			//Log.d(TAG,"final radius: "+radius);
 
 			radius = ( ( radius / 1000 ) - 0.7f ) * 2;
 
@@ -612,7 +674,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 			for (int i = 0; i < array.length; i++) {
 				sb.append(";").append(array[i]);
 			}
-			Log.d(TAG, sb.toString());
+			//Log.d(TAG, sb.toString());
 		}
 
 		private void printShortArray(short array[], String tag) {
@@ -620,7 +682,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 			for (int i = 0; i < array.length; i++) {
 				sb.append(";").append(array[i]);
 			}
-			Log.d(TAG, sb.toString());
+			//Log.d(TAG, sb.toString());
 		}
 	}
 
