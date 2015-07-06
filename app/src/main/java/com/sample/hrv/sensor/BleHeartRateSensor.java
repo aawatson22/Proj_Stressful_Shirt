@@ -68,13 +68,13 @@ public class BleHeartRateSensor extends BleSensor<float[]> {
     public boolean onCharacteristicRead(BluetoothGattCharacteristic c) {
         super.onCharacteristicRead(c);
 
-        Log.d(TAG, "onCharacteristicsReas");
+        //Log.d(TAG, "onCharacteristicsReas");
         
         if ( !c.getUuid().toString().equals(UUID_SENSOR_BODY_LOCATION) )
             return false;
 
         location = c.getProperties();
-        Log.d(TAG, "Sensor body location: " + location);
+        //Log.d(TAG, "Sensor body location: " + location);
         return true;
     }
 
@@ -114,18 +114,18 @@ public class BleHeartRateSensor extends BleSensor<float[]> {
 			BluetoothGattCharacteristic characteristic) {
 
 		int flag = characteristic.getProperties();
-		Log.d(TAG, "Heart rate flag: " + flag);
+		//.d(TAG, "Heart rate flag: " + flag);
 		int format = -1;
 		// Heart rate bit number format
 		if ((flag & 0x01) != 0) {
 			format = BluetoothGattCharacteristic.FORMAT_UINT16;
-			Log.d(TAG, "Heart rate format UINT16.");
+			//Log.d(TAG, "Heart rate format UINT16.");
 		} else {
 			format = BluetoothGattCharacteristic.FORMAT_UINT8;
-			Log.d(TAG, "Heart rate format UINT8.");
+			//Log.d(TAG, "Heart rate format UINT8.");
 		}
 		final int heartRate = characteristic.getIntValue(format, 1);
-		Log.d(TAG, String.format("Received heart rate: %d", heartRate));
+		//Log.d(TAG, String.format("Received heart rate: %d", heartRate));
 		return heartRate;
 	}
 	
@@ -136,14 +136,14 @@ public class BleHeartRateSensor extends BleSensor<float[]> {
 		int format = -1;
 		// Sensor contact status
 		if ((flag & 0x02) != 0) {
-			Log.d(TAG, "Heart rate sensor contact info exists");
+			//Log.d(TAG, "Heart rate sensor contact info exists");
 			if ((flag & 0x04) != 0) {
-				Log.d(TAG, "Heart rate sensor contact is ON");
+				//Log.d(TAG, "Heart rate sensor contact is ON");
 			} else {
-				Log.d(TAG, "Heart rate sensor contact is OFF");
+				//Log.d(TAG, "Heart rate sensor contact is OFF");
 			}
 		} else  {
-			Log.d(TAG, "Heart rate sensor contact info doesn't exists");
+			//Log.d(TAG, "Heart rate sensor contact info doesn't exists");
 		}
 		//final int heartRate = characteristic.getIntValue(format, 1);
 		//Log.d(TAG, String.format("Received heart rate: %d", heartRate));
@@ -157,9 +157,9 @@ public class BleHeartRateSensor extends BleSensor<float[]> {
 		int format = -1;
 		// Energy calculation status
 		if ((flag & 0x08) != 0) {
-			Log.d(TAG, "Heart rate energy calculation exists.");
+			//Log.d(TAG, "Heart rate energy calculation exists.");
 		} else {
-			Log.d(TAG, "Heart rate energy calculation doesn't exists.");
+			//Log.d(TAG, "Heart rate energy calculation doesn't exists.");
 		}
 		//final int heartRate = characteristic.getIntValue(format, 1);
 		//Log.d(TAG, String.format("Received heart rate: %d", heartRate));
@@ -177,38 +177,38 @@ public class BleHeartRateSensor extends BleSensor<float[]> {
         
         if ((flag & 0x01) != 0) {
             format = BluetoothGattCharacteristic.FORMAT_UINT16;
-            Log.d(TAG, "Heart rate format UINT16.");
+            //Log.d(TAG, "Heart rate format UINT16.");
             offset = 3;
         } else {
             format = BluetoothGattCharacteristic.FORMAT_UINT8;
-            Log.d(TAG, "Heart rate format UINT8.");
+            //Log.d(TAG, "Heart rate format UINT8.");
             offset = 2;
         }
         if ((flag & 0x08) != 0) {
             // calories present
             energy = characteristic.getIntValue(BluetoothGattCharacteristic.FORMAT_UINT16, offset);
             offset += 2;
-            Log.d(TAG, "Received energy: {}"+ energy);
+            //Log.d(TAG, "Received energy: {}"+ energy);
         }
         if ((flag & 0x16) != 0){
             // RR stuff.
-            Log.d(TAG, "RR stuff found at offset: "+ offset);
-            Log.d(TAG, "RR length: "+ (characteristic.getValue()).length);
+            //Log.d(TAG, "RR stuff found at offset: "+ offset);
+            //Log.d(TAG, "RR length: "+ (characteristic.getValue()).length);
             rr_count = ((characteristic.getValue()).length - offset) / 2;
-            Log.d(TAG, "RR length: "+ (characteristic.getValue()).length);
-            Log.d(TAG, "rr_count: "+ rr_count);
+            //Log.d(TAG, "RR length: "+ (characteristic.getValue()).length);
+            //Log.d(TAG, "rr_count: "+ rr_count);
 			if (rr_count > 0) {
 				Integer[] mRr_values = new Integer[rr_count];
 				for (int i = 0; i < rr_count; i++) {
 					mRr_values[i] = characteristic.getIntValue(
 							BluetoothGattCharacteristic.FORMAT_UINT16, offset);
 					offset += 2;
-					Log.d(TAG, "Received RR: " + mRr_values[i]);
+					//Log.d(TAG, "Received RR: " + mRr_values[i]);
 				}
 				return mRr_values;
 			}
         }
-        Log.d(TAG, "No RR data on this update: ");
+        //Log.d(TAG, "No RR data on this update: ");
         return null;
 	}
 

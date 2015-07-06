@@ -216,7 +216,7 @@ public class DeviceServicesActivity extends Activity {
         dataField.setText(R.string.no_data);
 		heartRateField.setText(R.string.no_data);
         //AVNN.setText(R.string.no_data);
-		intervalField.setText(R.string.no_data);
+		//intervalField.setText(R.string.no_data);
     }
 
 	public void setServiceListener(OnServiceItemClickListener listener) {

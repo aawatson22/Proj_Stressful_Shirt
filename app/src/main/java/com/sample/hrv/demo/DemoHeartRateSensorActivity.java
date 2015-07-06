@@ -133,54 +133,64 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 	@Override
 	public void onDataRecieved(BleSensor<?> sensor, String text) {
 			if (sensor instanceof BleHeartRateSensor) {
-			final BleHeartRateSensor heartSensor = (BleHeartRateSensor) sensor;
-			float[] values = heartSensor.getData();
+				final BleHeartRateSensor heartSensor = (BleHeartRateSensor) sensor;
+				float[] values = heartSensor.getData();
 				//Do not add when heart rate 0
-				if(everyOther) if (timeSum < 50000) {
-					if (values[1] != -1 && values[0] != 0) {
-						//Do not add when >20% off from previous value
-						Log.i("Difference : ", "" + (values[1] - prevValue) / ((values[1] + prevValue) / 2));
-						if ((values[1] - prevValue) / ((values[1] + prevValue) / 2) <= 0.2 && (values[1] - prevValue) / ((values[1] + prevValue) / 2) >= -0.8) {
-							hrvData.add(values);
-							index++;
-							everyOther = false;
-							timeSum += values[1];
-							Log.i("Heart Rate Array", "" + values[0] + " " + values[1]);
-							//BufferedReader in = null;
 
-							new RequestTask().execute("http://10.2.7.211:9081/?modelname=volleyballmathlete&sourcedata=" + values[1]);
+				if(everyOther){
+					if (timeSum < 50000) {
+						//Log.i("Heart Rate Array", "" + values[0] + " " + values[1]);
+						if (values[1] != -1 && values[0] != 0 && values[1] <= 1000 && values[1] >= 250) {
+							//Do not add when >20% off from previous value
+							Log.i("Difference : ", "" + (values[1] - prevValue) / ((values[1] + prevValue) / 2));
+							if ((values[1] - prevValue) / ((values[1] + prevValue) / 2) <= 0.2 && (values[1] - prevValue) / ((values[1] + prevValue) / 2) >= -0.8) {
+								hrvData.add(values);
+								index++;
+								everyOther = false;
+								timeSum += values[1];
+								Log.i("Heart Rate Array", "" + values[0] + " " + values[1]);
+								//Log.i("Heart Rate Array", "ADDED");
+								//BufferedReader in = null;
 
-							//Write data to file
-							String[] temp = new String[values.length + 2];
-							temp[0] = DateFormat.getDateInstance().format(new Date());
-							temp[1] = DateFormat.getTimeInstance().format(new Date());
-							for (int i = 0; i < values.length; i++) {
-								temp[i + 2] = Float.toString(values[i]);
-							}
+								new RequestTask().execute("http://10.2.7.211:9081/?modelname=volleyballmathlete&sourcedata=" + values[1]);
 
-							writer.writeNext(temp);
+								//Write data to file
+								String[] headers = {"Date", "Time", "Heart Rate", "Interval"};
+								if(file==null){
+									writer.writeNext(headers);
+								}
+								String[] temp = new String[values.length + 2];
+								temp[0] = DateFormat.getDateInstance().format(new Date());
+								temp[1] = DateFormat.getTimeInstance().format(new Date());
+								for (int i = 0; i < values.length; i++) {
+									temp[i + 2] = Float.toString(values[i]);
+								}
 
-							//Write to file at each data point
-							try {
-								writer.flush();
-							} catch (IOException e) {
-								e.printStackTrace();
+								writer.writeNext(temp);
+
+								//Write to file at each data point
+								try {
+									writer.flush();
+								} catch (IOException e) {
+									e.printStackTrace();
+								}
 							}
 						}
+						prevValue = values[1];
 					}
-					prevValue = values[1];
-				} else {
-					float[] arr = hrvData.getFirst();
-					timeSum -= arr[1];
-					hrvData.removeFirst();
+					else {
+						float[] arr = hrvData.getFirst();
+						timeSum -= arr[1];
+						hrvData.removeFirst();
 
-					//Do HRV Calculations
-					AVNN = HRVCalc.AVNN(hrvData);
-					SDNN = HRVCalc.SDNN(hrvData);
-					rMSSD = HRVCalc.rMSSD(hrvData);
-					NN50 = HRVCalc.NN50(hrvData);
-					pNN50 = HRVCalc.pNN50(hrvData);
-				}
+						//Do HRV Calculations
+						AVNN = HRVCalc.AVNN(hrvData);
+						SDNN = HRVCalc.SDNN(hrvData);
+						rMSSD = HRVCalc.rMSSD(hrvData);
+						NN50 = HRVCalc.NN50(hrvData);
+						pNN50 = HRVCalc.pNN50(hrvData);
+					}
+			}
 			else{
 				everyOther = true;
 			}
