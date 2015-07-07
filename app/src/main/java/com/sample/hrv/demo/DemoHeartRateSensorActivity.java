@@ -52,6 +52,8 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 
 import static com.sample.hrv.demo.DemoHeartRateSensorActivity.HRVCalc.pNN50;
 import static com.sample.hrv.demo.DemoHeartRateSensorActivity.HRVCalc.rMSSD;
@@ -96,7 +98,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
     HttpClient httpclient = new DefaultHttpClient();
 
     // Prepare a request object
-    HttpGet httpget = new HttpGet("http://www.google.com");
+    //HttpGet httpget = new HttpGet("http://www.google.com");
 
     // Execute the request
     HttpResponse response;
@@ -106,6 +108,16 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		File folder = new File("/sdcard/Android/data/com.sample.hrv/");
+		boolean success = true;
+		if (!folder.exists()) {
+			success = folder.mkdir();
+		}
+		if (success) {
+			// Do something on success
+		} else {
+			// Do something else on failure
+		}
 
 		try {
 			writer = new CSVWriter(new FileWriter("/sdcard/Android/data/com.sample.hrv/" +
@@ -244,6 +256,10 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 			HttpClient httpclient = new DefaultHttpClient();
 			HttpResponse response;
 			String responseString = null;
+
+			HttpParams httpParameters = httpclient.getParams();
+			HttpConnectionParams.setTcpNoDelay(httpParameters, true);
+
 			try {
 				response = httpclient.execute(new HttpGet(uri[0]));
 				StatusLine statusLine = response.getStatusLine();
