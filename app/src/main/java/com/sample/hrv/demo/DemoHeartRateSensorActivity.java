@@ -39,6 +39,12 @@ import android.content.Context;
 import android.os.SystemClock;
 
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.opencsv.CSVWriter;
 import com.sample.hrv.R;
 import com.sample.hrv.sensor.BleHeartRateSensor;
@@ -103,11 +109,14 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
     // Execute the request
     HttpResponse response;
 
+	//final TextView mTextView = (TextView) findViewById(R.id.text);
 
+	RequestQueue queue;
 
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		queue = Volley.newRequestQueue(this);
 		File folder = new File("/sdcard/Android/data/com.sample.hrv/");
 		boolean success = true;
 		if (!folder.exists()) {
@@ -143,65 +152,84 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 	}
 
 	@Override
+
 	public void onDataRecieved(BleSensor<?> sensor, String text) {
-			if (sensor instanceof BleHeartRateSensor) {
-				final BleHeartRateSensor heartSensor = (BleHeartRateSensor) sensor;
-				float[] values = heartSensor.getData();
-				//Do not add when heart rate 0
+		if (sensor instanceof BleHeartRateSensor) {
+			final BleHeartRateSensor heartSensor = (BleHeartRateSensor) sensor;
+			float[] values = heartSensor.getData();
 
-				if(everyOther){
-					if (timeSum < 50000) {
-						//Log.i("Heart Rate Array", "" + values[0] + " " + values[1]);
-						if (values[1] != -1 && values[0] != 0 && values[1] <= 1000 && values[1] >= 250) {
-							//Do not add when >20% off from previous value
-							Log.i("Difference : ", "" + (values[1] - prevValue) / ((values[1] + prevValue) / 2));
-							if ((values[1] - prevValue) / ((values[1] + prevValue) / 2) <= 0.2 && (values[1] - prevValue) / ((values[1] + prevValue) / 2) >= -0.8) {
-								hrvData.add(values);
-								index++;
-								everyOther = false;
-								timeSum += values[1];
-								Log.i("Heart Rate Array", "" + values[0] + " " + values[1]);
-								//Log.i("Heart Rate Array", "ADDED");
-								//BufferedReader in = null;
+			if(everyOther){
+				if (timeSum < 50000) {
+					if (values[1] != -1 && values[0] != 0 && values[1] <= 1000 && values[1] >= 250) {
+						//Do not add when >20% off from previous value
+						//Log.i("Difference : ", "" + (values[1] - prevValue) / ((values[1] + prevValue) / 2));
+						if ((values[1] - prevValue) / ((values[1] + prevValue) / 2) <= 0.2 && (values[1] - prevValue) / ((values[1] + prevValue) / 2) >= -0.8) {
+							hrvData.add(values);
+							index++;
+							everyOther = false;
+							timeSum += values[1];
+							Log.i("Heart Rate Array", "" + values[0] + " " + values[1]);
 
-								new RequestTask().execute("http://10.2.7.211:9081/?modelname=volleyballmathlete&sourcedata=" + values[1]);
+							//new RequestTask().execute("http://10.2.7.211:9081/?modelname=volleyballmathlete&sourcedata=" + values[1]);
 
-								//Write data to file
-								String[] headers = {"Date", "Time", "Heart Rate", "Interval"};
-								if(file==null){
-									writer.writeNext(headers);
+							// Instantiate the RequestQueue.
+							String url ="http://10.2.7.211:9081/?modelname=volleyballmathlete&sourcedata=" + values[1];
+
+							// Request a string response from the provided URL.
+							StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+							new Response.Listener<String>() {
+								@Override
+								public void onResponse(String response) {
+									// Display the first 500 characters of the response string.
+									//viewText.setText("Response is: "+ response.substring(0,500));
+									Log.i("Nupic - ", "The data did not successfully send.");
 								}
-								String[] temp = new String[values.length + 2];
-								temp[0] = DateFormat.getDateInstance().format(new Date());
-								temp[1] = DateFormat.getTimeInstance().format(new Date());
-								for (int i = 0; i < values.length; i++) {
-									temp[i + 2] = Float.toString(values[i]);
-								}
+							}, new Response.ErrorListener() {
+								@Override
+								public void onErrorResponse(VolleyError error) {
+								//viewText.setText("That didn't work!");
 
-								writer.writeNext(temp);
-
-								//Write to file at each data point
-								try {
-									writer.flush();
-								} catch (IOException e) {
-									e.printStackTrace();
 								}
+							});
+							// Add the request to the RequestQueue.
+							queue.add(stringRequest);
+
+							//Write data to file
+							String[] headers = {"Date", "Time", "Heart Rate", "Interval"};
+							if(file==null){
+								writer.writeNext(headers);
+							}
+							String[] temp = new String[values.length + 2];
+							temp[0] = DateFormat.getDateInstance().format(new Date());
+							temp[1] = DateFormat.getTimeInstance().format(new Date());
+							for (int i = 0; i < values.length; i++) {
+								temp[i + 2] = Float.toString(values[i]);
+							}
+
+							writer.writeNext(temp);
+
+							//Write to file at each data point
+							try {
+								writer.flush();
+							} catch (IOException e) {
+								e.printStackTrace();
 							}
 						}
-						prevValue = values[1];
 					}
-					else {
-						float[] arr = hrvData.getFirst();
-						timeSum -= arr[1];
-						hrvData.removeFirst();
+					prevValue = values[1];
+				}
+				else {
+					float[] arr = hrvData.getFirst();
+					timeSum -= arr[1];
+					hrvData.removeFirst();
 
-						//Do HRV Calculations
-						AVNN = HRVCalc.AVNN(hrvData);
-						SDNN = HRVCalc.SDNN(hrvData);
-						rMSSD = HRVCalc.rMSSD(hrvData);
-						NN50 = HRVCalc.NN50(hrvData);
-						pNN50 = HRVCalc.pNN50(hrvData);
-					}
+					//Do HRV Calculations
+					AVNN = HRVCalc.AVNN(hrvData);
+					SDNN = HRVCalc.SDNN(hrvData);
+					rMSSD = HRVCalc.rMSSD(hrvData);
+					NN50 = HRVCalc.NN50(hrvData);
+					pNN50 = HRVCalc.pNN50(hrvData);
+				}
 			}
 			else{
 				everyOther = true;
@@ -231,6 +259,26 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 					stressLevel = 1;
 				}
 			}
+				String url = "https://dweet.io/dweet/for/Wearable_0002?pNN50=" + stressLevel +"&heartRate=" + values[0];
+
+				// Request a string response from the provided URL.
+				StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+				new Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+						// Display the first 500 characters of the response string.
+						//viewText.setText("Response is: "+ response.substring(0,500));
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+					//viewText.setText("That didn't work!");
+					}
+				});
+				// Add the request to the RequestQueue.
+				queue.add(stringRequest);
+
+				//new RequestTask().execute("https://dweet.io/dweet/for/Wearable_0002?pNN50=" + stressLevel);
 
 
 			renderer.setInterval(values);
@@ -245,6 +293,8 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 			text = text + "\nStress Level = " + stressLevel;
 			//Log.i("text : ", "" + text);
 			viewText.setText(text);
+
+			//Log.i("Stress Level", ""+stressLevel);
 		}
 
 	}
@@ -375,7 +425,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 			for(int i = 0; i < ll.size() - 1; i++){
 				float arr[] = ll.get(i);
 				float nextArr[] = ll.get(i+1);
-				if(nextArr[1] - arr[1] > 50){
+				if(Math.abs(nextArr[1] - arr[1]) > 50){
 					n50Count++;
 				}
 			}

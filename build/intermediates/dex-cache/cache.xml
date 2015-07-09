@@ -16,6 +16,13 @@
         <dex dex="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\pre-dexed\debug\gson-2.3-36af70e90d458983cc9eb3ef7e10b2e699d2994a.jar" />
     </item>
     <item
+        jar="C:\Users\Amanda\.gradle\caches\modules-2\files-2.1\com.mcxiaoke.volley\library\1.0.15\9093a362d18c5f81f58e49d86dece57d9b6e1cb7\library-1.0.15.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="9093a362d18c5f81f58e49d86dece57d9b6e1cb7">
+        <dex dex="C:\Users\Amanda\AndroidStudioProjects\Proj_Stressful_Shirt\app\build\intermediates\pre-dexed\debug\library-1.0.15-701e64e665e3fedfdfb65fc21d7c863338d42823.jar" />
+    </item>
+    <item
         jar="C:\Users\Amanda\.gradle\caches\modules-2\files-2.1\com.koushikdutta.ion\ion\2.1.6\cd55ef3ba6d8b62838b658ba2507b019dffb3a08\ion-2.1.6.jar"
         jumboMode="false"
         revision="22.0.1"
