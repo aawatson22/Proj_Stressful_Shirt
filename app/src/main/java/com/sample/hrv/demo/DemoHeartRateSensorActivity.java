@@ -91,6 +91,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 	private double rMSSD;
 	private float NN50;
 	private float pNN50;
+	private int fft;
 
 	//Stress level
 	private int stressLevel;
@@ -173,7 +174,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 							//new RequestTask().execute("http://10.2.7.211:9081/?modelname=volleyballmathlete&sourcedata=" + values[1]);
 
 							// Instantiate the RequestQueue.
-							String url ="http://10.2.7.211:9081/?modelname=volleyballmathlete&sourcedata=" + values[1];
+							String url ="http://10.2.2.174:9081/?modelname=volleyballmathlete&sourcedata=" + values[1];
 
 							// Request a string response from the provided URL.
 							StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
@@ -182,12 +183,13 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 								public void onResponse(String response) {
 									// Display the first 500 characters of the response string.
 									//viewText.setText("Response is: "+ response.substring(0,500));
-									Log.i("Nupic - ", "The data did not successfully send.");
+									Log.i("Nupic - ", response.substring(0));
 								}
 							}, new Response.ErrorListener() {
 								@Override
 								public void onErrorResponse(VolleyError error) {
-								//viewText.setText("That didn't work!");
+									//viewText.setText("That didn't work!");
+									Log.i("Nupic - ", "That didn't work!");
 
 								}
 							});
@@ -229,6 +231,7 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 					rMSSD = HRVCalc.rMSSD(hrvData);
 					NN50 = HRVCalc.NN50(hrvData);
 					pNN50 = HRVCalc.pNN50(hrvData);
+
 				}
 			}
 			else{
@@ -237,25 +240,25 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 
 			//If statements to determine real time stress level
 			if(pNN50 > 0) {
-				if (pNN50 < 1.9) {
+				if (pNN50 < 3.0) {
 					stressLevel = 10;
-				} else if (pNN50 < 3.9) {
+				} else if (pNN50 < 5.0) {
 					stressLevel = 9;
-				} else if (pNN50 < 5.9) {
+				} else if (pNN50 < 7.0) {
 					stressLevel = 8;
-				} else if (pNN50 < 8.9) {
+				} else if (pNN50 < 11.0) {
 					stressLevel = 7;
-				} else if (pNN50 < 10.9) {
+				} else if (pNN50 < 15.0) {
 					stressLevel = 6;
-				} else if (pNN50 < 12.9) {
+				} else if (pNN50 < 19.0) {
 					stressLevel = 5;
-				} else if (pNN50 < 14.9) {
+				} else if (pNN50 < 23.0) {
 					stressLevel = 4;
-				} else if (pNN50 < 20.9) {
+				} else if (pNN50 < 30.0) {
 					stressLevel = 3;
-				} else if (pNN50 < 26.9) {
+				} else if (pNN50 < 40.0) {
 					stressLevel = 2;
-				} else if (pNN50 < 32.9) {
+				} else{
 					stressLevel = 1;
 				}
 			}
@@ -268,11 +271,13 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 					public void onResponse(String response) {
 						// Display the first 500 characters of the response string.
 						//viewText.setText("Response is: "+ response.substring(0,500));
+						Log.i("Dweet - ", response.substring(0));
 					}
 				}, new Response.ErrorListener() {
 					@Override
 					public void onErrorResponse(VolleyError error) {
-					//viewText.setText("That didn't work!");
+						//viewText.setText("That didn't work!");
+						Log.i("Dweet - ", "That didn't work!");
 					}
 				});
 				// Add the request to the RequestQueue.
@@ -299,44 +304,89 @@ public class DemoHeartRateSensorActivity extends DemoSensorActivity {
 
 	}
 
-	class RequestTask extends AsyncTask<String, String, String>{
+	/**FFT
+	 *
+	 */
 
-		@Override
-		protected String doInBackground(String... uri) {
-			HttpClient httpclient = new DefaultHttpClient();
-			HttpResponse response;
-			String responseString = null;
+	public class FFT {
 
-			HttpParams httpParameters = httpclient.getParams();
-			HttpConnectionParams.setTcpNoDelay(httpParameters, true);
+		int n, m;
 
-			try {
-				response = httpclient.execute(new HttpGet(uri[0]));
-				StatusLine statusLine = response.getStatusLine();
-				if(statusLine.getStatusCode() == HttpStatus.SC_OK){
-					ByteArrayOutputStream out = new ByteArrayOutputStream();
-					response.getEntity().writeTo(out);
-					responseString = out.toString();
-					out.close();
-				} else{
-					//Closes the connection.
-					response.getEntity().getContent().close();
-					throw new IOException(statusLine.getReasonPhrase());
-				}
-			} catch (ClientProtocolException e) {
-				//TODO Handle problems..
-			} catch (IOException e) {
-				//TODO Handle problems..
+		// Lookup tables. Only need to recompute when size of FFT changes.
+		double[] cos;
+		double[] sin;
+
+		public FFT(int n) {
+			this.n = n;
+			this.m = (int) (Math.log(n) / Math.log(2));
+
+			// Make sure n is a power of 2
+			if (n != (1 << m))
+				throw new RuntimeException("FFT length must be power of 2");
+
+			// precompute tables
+			cos = new double[n / 2];
+			sin = new double[n / 2];
+
+			for (int i = 0; i < n / 2; i++) {
+				cos[i] = Math.cos(-2 * Math.PI * i / n);
+				sin[i] = Math.sin(-2 * Math.PI * i / n);
 			}
-			return responseString;
+
 		}
 
-		@Override
-		protected void onPostExecute(String result) {
-			super.onPostExecute(result);
-			//Do anything with response..
+		public void fft(double[] x, double[] y) {
+			int i, j, k, n1, n2, a;
+			double c, s, t1, t2;
+
+			// Bit-reverse
+			j = 0;
+			n2 = n / 2;
+			for (i = 1; i < n - 1; i++) {
+				n1 = n2;
+				while (j >= n1) {
+					j = j - n1;
+					n1 = n1 / 2;
+				}
+				j = j + n1;
+
+				if (i < j) {
+					t1 = x[i];
+					x[i] = x[j];
+					x[j] = t1;
+					t1 = y[i];
+					y[i] = y[j];
+					y[j] = t1;
+				}
+			}
+
+			// FFT
+			n1 = 0;
+			n2 = 1;
+
+			for (i = 0; i < m; i++) {
+				n1 = n2;
+				n2 = n2 + n2;
+				a = 0;
+
+				for (j = 0; j < n1; j++) {
+					c = cos[a];
+					s = sin[a];
+					a += 1 << (m - i - 1);
+
+					for (k = j; k < n; k = k + n2) {
+						t1 = c * x[k + n1] - s * y[k + n1];
+						t2 = s * x[k + n1] + c * y[k + n1];
+						x[k + n1] = x[k] - t1;
+						y[k + n1] = y[k] - t2;
+						x[k] = x[k] + t1;
+						y[k] = y[k] + t2;
+					}
+				}
+			}
 		}
 	}
+
 
 	/**
 	 * This class provides the more in depth calculations for HRV. These Include

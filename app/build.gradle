@@ -20,5 +20,6 @@ android {
 dependencies {
     compile files('libs/opencsv-3.4.jar')
     compile 'com.koushikdutta.ion:ion:2.+'
-    compile 'com.mcxiaoke.volley:library:1.0.15'
+   // compile 'com.mcxiaoke.volley:library:1.0.15'
+    compile files('libs/volley.jar')
 }
